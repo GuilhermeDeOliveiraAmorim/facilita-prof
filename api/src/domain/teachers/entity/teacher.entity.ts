@@ -33,14 +33,14 @@ export default class Teacher implements TeacherInterface {
     }
 
     get id(): string {
-        throw new Error("Method not implemented.");
+        return this._id;
     }
 
     get username(): string {
-        throw new Error("Method not implemented.");
+        return this._username;
     }
 
     get name(): string {
-        throw new Error("Method not implemented.");
+        return this._name;
     }
 }

@@ -10,7 +10,6 @@ teacherRouter.post("/", async (req: Request, res: Response) => {
         const input = {
             name: req.body.name,
             username: req.body.username,
-            password: req.body.password,
         };
         const output = await teacherFacade.createTeacher(input);
         res.send(output);
