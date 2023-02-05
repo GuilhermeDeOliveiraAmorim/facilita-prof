@@ -6,11 +6,11 @@ import {
     OutputCreateTeacherDto,
 } from "./create_teacher.dto";
 
-export default class CreateUserUseCase implements UseCaseInterface {
+export default class CreateTeacherUseCase implements UseCaseInterface {
     private teacherRepository: TeacherRepositoryInterface;
 
-    constructor(userRepository: TeacherRepositoryInterface) {
-        this.teacherRepository = userRepository;
+    constructor(teacherRepository: TeacherRepositoryInterface) {
+        this.teacherRepository = teacherRepository;
     }
 
     async execute(

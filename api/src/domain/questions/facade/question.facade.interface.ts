@@ -31,13 +31,4 @@ export default interface QuestionFacadeInterface {
     createQuestion(
         input: CreateQuestionFacadeInputDto
     ): Promise<CreateQuestionFacadeOutputDto>;
-    // findTeacher(
-    //   input: FindTeacherFacadeInputDto
-    // ): Promise<FindTeacherFacadeOutputDto>;
-    // findAllTeachers(
-    //   input: FindAllTeachersFacadeInputDto
-    // ): Promise<FindAllTeachersFacadeOutputDto>;
-    // authenticateTeacher(
-    //   input: AuthenticateTeacherFacadeInputDto
-    // ): Promise<AuthenticateTeacherFacadeOutputDto>;
 }

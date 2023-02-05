@@ -6,11 +6,11 @@ import {
     OutputCreateQuestionDto,
 } from "./create_question.dto";
 
-export default class CreateUserUseCase implements UseCaseInterface {
+export default class CreateQuestionUseCase implements UseCaseInterface {
     private questionRepository: QuestionRepositoryInterface;
 
-    constructor(userRepository: QuestionRepositoryInterface) {
-        this.questionRepository = userRepository;
+    constructor(questionRepository: QuestionRepositoryInterface) {
+        this.questionRepository = questionRepository;
     }
 
     async execute(
@@ -23,6 +23,8 @@ export default class CreateUserUseCase implements UseCaseInterface {
         };
 
         const question = new Question(questionProps);
+
+        console.log(question);
 
         await this.questionRepository.add(question);
 
