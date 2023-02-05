@@ -15,4 +15,15 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
             },
         });
     }
+
+    async find(id: string): Promise<Teacher> {
+        const teacher = await prisma.teacher.findFirst({
+            where: {
+                id: id,
+            },
+        });
+        return new Teacher(teacher);
+    }
+
+    async createExam(teacher: Teacher): Promise<void> {}
 }
