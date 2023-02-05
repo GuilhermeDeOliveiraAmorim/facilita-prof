@@ -20,3 +20,35 @@ questionRouter.post("/", async (req: Request, res: Response) => {
         });
     }
 });
+
+questionRouter.get("/all", async (req: Request, res: Response) => {
+    const questionFacade = QuestionFacadeFactory.create();
+
+    try {
+        const input = {};
+        const output = await questionFacade.findAllQuestions(input);
+        res.send(output);
+    } catch (err: any) {
+        res.status(500).send({
+            message: err.message,
+        });
+    }
+});
+
+questionRouter.get("/:id", async (req: Request, res: Response) => {
+    const questionFacade = QuestionFacadeFactory.create();
+
+    console.log(req.params.id);
+
+    try {
+        const input = {
+            id: req.params.id,
+        };
+        const output = await questionFacade.findByIdQuestion(input);
+        res.send(output);
+    } catch (err: any) {
+        res.status(500).send({
+            message: err.message,
+        });
+    }
+});

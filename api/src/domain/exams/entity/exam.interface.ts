@@ -6,4 +6,5 @@ export default interface ExamInterface {
     get title(): string;
     get teacher(): Teacher;
     get questions(): Question[];
+    set questions(questions: Question[]);
 }

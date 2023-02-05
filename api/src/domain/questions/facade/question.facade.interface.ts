@@ -1,3 +1,5 @@
+import Question from "../entity/question.entity";
+
 export interface CreateQuestionFacadeInputDto {
     title: string;
     content: string;
@@ -20,15 +22,26 @@ export interface FindQuestionFacadeOutputDto {
 
 export interface FindAllQuestionsFacadeInputDto {}
 
-export interface FindAllQuestionsFacadeOutputDto {
-    teachers: {
-        id: string;
-        username: string;
-    }[];
+export interface FindAllQuestionsFacadeOutputDto {}
+
+export interface FindByIdQuestionFacadeInputDto {
+    id: string;
+}
+
+export interface FindByIdQuestionFacadeOutputDto {
+    question: Question;
 }
 
 export default interface QuestionFacadeInterface {
     createQuestion(
         input: CreateQuestionFacadeInputDto
     ): Promise<CreateQuestionFacadeOutputDto>;
+
+    findAllQuestions(
+        input: FindAllQuestionsFacadeInputDto
+    ): Promise<FindAllQuestionsFacadeOutputDto>;
+
+    findByIdQuestion(
+        input: FindByIdQuestionFacadeInputDto
+    ): Promise<FindByIdQuestionFacadeOutputDto>;
 }

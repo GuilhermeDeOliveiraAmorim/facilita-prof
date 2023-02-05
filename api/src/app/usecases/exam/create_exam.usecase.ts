@@ -1,8 +1,10 @@
+import { NIL } from "uuid";
 import UseCaseInterface from "../../../domain/@shared/usecase/use-case.interface";
 import Exam from "../../../domain/exams/entity/exam.entity";
 import ExamRepositoryInterface from "../../../domain/exams/repository/exam.repository.interface";
 import Question from "../../../domain/questions/entity/question.entity";
 import QuestionRepositoryInterface from "../../../domain/questions/repository/question.repository.interface";
+import Teacher from "../../../domain/teachers/entity/teacher.entity";
 import TeacherRepositoryInterface from "../../../domain/teachers/repository/teacher.repository.interface";
 import { InputCreateExamDto, OutputCreateExamDto } from "./create_exam.dto";
 
@@ -22,23 +24,33 @@ export default class CreateExamUseCase implements UseCaseInterface {
     }
 
     async execute(input: InputCreateExamDto): Promise<OutputCreateExamDto> {
+        const teacher = await this.teacherRepository.find(input.teacher_id);
+
+        const questions: Question[] = [];
+
+        input.questions_ids.forEach(async (question_id) => {
+            questions.push(
+                await this.questionRepository.findById(question_id.question_id)
+            );
+        });
+
         const examProps = {
             title: input.title,
-            teacher: input.teacher,
-            questions: input.questions,
+            teacher: teacher,
+            questions: questions,
         };
 
         const exam = new Exam(examProps);
-        const question = new Question(examProps.questions[0]);
 
         await this.examRepository.add(exam);
-        await this.questionRepository.add(question);
 
-        return {
-            id: exam.id,
-            title: exam.title,
-            teacher: exam.teacher,
-            questions: exam.questions,
-        };
+        const output: OutputCreateExamDto = null;
+
+        output.id = exam.id;
+        output.title = exam.title;
+        output.teacher = exam.teacher;
+        output.questions = exam.questions;
+
+        return output;
     }
 }

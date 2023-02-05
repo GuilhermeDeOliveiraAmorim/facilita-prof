@@ -48,4 +48,8 @@ export default class Exam implements ExamInterface {
     get questions(): Question[] {
         return this._questions;
     }
+
+    set questions(questions: Question[]) {
+        this._questions = questions;
+    }
 }

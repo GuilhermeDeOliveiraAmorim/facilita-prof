@@ -24,8 +24,6 @@ export default class CreateQuestionUseCase implements UseCaseInterface {
 
         const question = new Question(questionProps);
 
-        console.log(question);
-
         await this.questionRepository.add(question);
 
         return {

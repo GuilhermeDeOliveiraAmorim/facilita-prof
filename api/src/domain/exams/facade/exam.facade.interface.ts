@@ -18,13 +18,4 @@ export default interface ExamFacadeInterface {
     createExam(
         input: CreateExamFacadeInputDto
     ): Promise<CreateExamFacadeOutputDto>;
-    // findTeacher(
-    //   input: FindTeacherFacadeInputDto
-    // ): Promise<FindTeacherFacadeOutputDto>;
-    // findAllTeachers(
-    //   input: FindAllTeachersFacadeInputDto
-    // ): Promise<FindAllTeachersFacadeOutputDto>;
-    // authenticateTeacher(
-    //   input: AuthenticateTeacherFacadeInputDto
-    // ): Promise<AuthenticateTeacherFacadeOutputDto>;
 }

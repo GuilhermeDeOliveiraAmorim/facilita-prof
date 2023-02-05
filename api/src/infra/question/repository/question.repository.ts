@@ -16,4 +16,25 @@ export default class QuestionRepository implements QuestionRepositoryInterface {
             },
         });
     }
+
+    async findById(id: string): Promise<Question> {
+        const question = await prisma.question.findFirst({
+            where: {
+                id: id,
+            },
+        });
+        return new Question(question);
+    }
+
+    async findAll(): Promise<Question[]> {
+        const questions = await prisma.question.findMany();
+
+        const output: Question[] = [];
+
+        questions.forEach((question) => {
+            output.push(new Question(question));
+        });
+
+        return output;
+    }
 }
