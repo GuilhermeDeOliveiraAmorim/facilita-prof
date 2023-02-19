@@ -3,6 +3,7 @@ import ExamRepositoryInterface from "../../../domain/exams/repository/exam.repos
 
 import { PrismaClient } from "@prisma/client";
 import Teacher from "../../../domain/teachers/entity/teacher.entity";
+import Question from "../../../domain/questions/entity/question.entity";
 const prisma = new PrismaClient();
 
 export default class ExamRepository implements ExamRepositoryInterface {
@@ -51,17 +52,34 @@ export default class ExamRepository implements ExamRepositoryInterface {
             },
             include: {
                 teacher: true,
+                questions: true,
             },
+        });
+
+        const teacher = new Teacher({
+            id: exam.teacher.id,
+            name: exam.teacher.name,
+            username: exam.teacher.username,
+        });
+
+        const questionsAdded: Question[] = [];
+
+        exam.questions.map((question) => {
+            questionsAdded.push(
+                new Question({
+                    id: question.id,
+                    answer: question.answer,
+                    content: question.content,
+                    title: question.title,
+                })
+            );
         });
 
         return new Exam({
             id: exam.id,
             title: exam.title,
-            teacher: new Teacher({
-                id: exam.teacher.id,
-                name: exam.teacher.name,
-                username: exam.teacher.username,
-            }),
+            teacher: teacher,
+            questions: questionsAdded,
         });
     }
 }

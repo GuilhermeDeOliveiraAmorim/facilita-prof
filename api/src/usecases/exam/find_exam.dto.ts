@@ -1,11 +1,11 @@
-import Question from "../../../domain/questions/entity/question.entity";
-import Teacher from "../../../domain/teachers/entity/teacher.entity";
+import Question from "../../domain/questions/entity/question.entity";
+import Teacher from "../../domain/teachers/entity/teacher.entity";
 
-export interface InputFindExamDto {
+export interface FindExamInputDto {
     id: string;
 }
 
-export interface OutputFindExamDto {
+export interface FindExamOutputDto {
     id: string;
     title: string;
     teacher: Teacher;

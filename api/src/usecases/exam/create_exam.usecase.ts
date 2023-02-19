@@ -46,8 +46,6 @@ export default class CreateExamUseCase implements UseCaseInterface {
 
         await this.examRepository.add(exam);
 
-        console.log(exam);
-
         const output: OutputCreateExamDto = null;
 
         output.id = exam.id;
