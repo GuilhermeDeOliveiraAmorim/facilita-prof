@@ -1,7 +1,10 @@
-import TeacherRepositoryInterface from "../../../domain/teachers/repository/teacher.repository.interface";
-import Teacher from "../../../domain/teachers/entity/teacher.entity";
-
 import { PrismaClient } from "@prisma/client";
+
+import TeacherRepositoryInterface from "../../../domain/teachers/repository/teacher.repository.interface";
+
+import Exam from "../../../domain/exams/entity/exam.entity";
+import Teacher from "../../../domain/teachers/entity/teacher.entity";
+import Question from "../../../domain/questions/entity/question.entity";
 
 const prisma = new PrismaClient();
 
@@ -25,5 +28,37 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
         return new Teacher(teacher);
     }
 
-    async createExam(teacher: Teacher): Promise<void> {}
+    async createExam(
+        teacher: Teacher,
+        exam: Exam,
+        questions: Question[]
+    ): Promise<Exam> {
+        const teacherId = teacher.id;
+
+        const newExam = await prisma.exam.create({
+            data: {
+                id: exam.id,
+                title: exam.title,
+                teacher: {
+                    connect: {
+                        id: teacherId,
+                    },
+                },
+                questions: {
+                    connect: {
+                        id: questions[0].id,
+                    },
+                },
+            },
+        });
+
+        const examProps = {
+            id: newExam.id,
+            title: newExam.title,
+            teacher: teacher,
+            questions: questions,
+        };
+
+        return new Exam(examProps);
+    }
 }
