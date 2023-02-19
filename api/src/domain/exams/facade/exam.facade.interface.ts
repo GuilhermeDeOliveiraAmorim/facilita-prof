@@ -3,8 +3,8 @@ import Teacher from "../../teachers/entity/teacher.entity";
 
 export interface CreateExamFacadeInputDto {
     title: string;
-    teacher: Teacher;
-    questions: Question[];
+    teacher_id: string;
+    questions_ids: { question_id: string }[];
 }
 
 export interface CreateExamFacadeOutputDto {

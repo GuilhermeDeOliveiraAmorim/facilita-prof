@@ -1,7 +1,7 @@
-import CreateExamUseCase from "../../../app/usecases/exam/create_exam.usecase";
 import ExamRepository from "../../../infra/exam/repository/exam.repository";
 import QuestionRepository from "../../../infra/question/repository/question.repository";
 import TeacherRepository from "../../../infra/teacher/repository/teacher.repository";
+import CreateExamUseCase from "../../../usecases/exam/create_exam.usecase";
 import ExamFacade from "../facade/exam.facade";
 
 export default class ExamFacadeFactory {

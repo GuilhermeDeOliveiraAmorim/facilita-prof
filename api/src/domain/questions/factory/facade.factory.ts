@@ -1,9 +1,8 @@
 import QuestionRepository from "../../../infra/question/repository/question.repository";
-import CreateQuestionUseCase from "../../../app/usecases/question/create_question/create_question.usecase";
+import CreateQuestionUseCase from "../../../usecases/question/create_question/create_question.usecase";
+import FindAllQuestionsUseCase from "../../../usecases/question/find_all_question/find_all_question.usecase";
+import FindByIdQuestionUseCase from "../../../usecases/question/find_by_id_question/find_by_id_question.usecase";
 import QuestionFacade from "../facade/question.facade";
-import FindAllQuestionsUseCase from "../../../app/usecases/question/find_all_question/find_all_question.usecase";
-import FindByIdQuestionUseCase from "../../../app/usecases/question/find_by_id_question/find_by_id_question.usecase";
-
 export default class QuestionFacadeFactory {
     static create() {
         const questionRepository = new QuestionRepository();
