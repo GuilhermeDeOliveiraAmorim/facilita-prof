@@ -3,22 +3,45 @@ import ExamRepositoryInterface from "../../../domain/exams/repository/exam.repos
 
 import { PrismaClient } from "@prisma/client";
 import Teacher from "../../../domain/teachers/entity/teacher.entity";
-import Question from "../../../domain/questions/entity/question.entity";
 const prisma = new PrismaClient();
 
 export default class ExamRepository implements ExamRepositoryInterface {
     async add(exam: Exam): Promise<void> {
-        await prisma.exam.create({
-            data: {
-                id: exam.id,
-                title: exam.title,
-                teacher: {
-                    connect: {
-                        id: exam.teacher.id,
-                    },
+        const examId = exam.id;
+        const examTitle = exam.title;
+        const examTeacher = exam.teacher.id;
+        const examQuestions = exam.questions;
+
+        const data = {
+            id: examId,
+            title: examTitle,
+            teacher: {
+                connect: {
+                    id: examTeacher,
                 },
             },
+        };
+
+        await prisma.exam.create({
+            data: data,
         });
+
+        await Promise.all(
+            examQuestions.map(async (question) => {
+                await prisma.exam.update({
+                    where: {
+                        id: examId,
+                    },
+                    data: {
+                        questions: {
+                            connect: {
+                                id: question.id,
+                            },
+                        },
+                    },
+                });
+            })
+        );
     }
 
     async find(id: string): Promise<Exam> {

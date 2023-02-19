@@ -9,8 +9,8 @@ examRouter.post("/", async (req: Request, res: Response) => {
     try {
         const input = {
             title: req.body.title,
-            teacher: req.body.teacher,
-            questions: req.body.questions,
+            teacher_id: req.body.teacher_id,
+            questions_ids: req.body.questions_ids,
         };
         const output = await examFacade.createExam(input);
         res.send(output);
