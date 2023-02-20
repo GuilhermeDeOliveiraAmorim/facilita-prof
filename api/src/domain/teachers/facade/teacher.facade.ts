@@ -1,43 +1,45 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
 import TeacherFacadeInterface, {
-    CreateTeacherExamInputDto,
-    CreateTeacherExamOutputDto,
     CreateTeacherFacadeInputDto,
     CreateTeacherFacadeOutputDto,
     FindTeacherFacadeInputDto,
     FindTeacherFacadeOutputDto,
+    FindTeachersFacadeInputDto,
+    FindTeachersFacadeOutputDto,
 } from "./teacher.facade.interface";
 
 export interface UseCaseProps {
-    createUseCase: UseCaseInterface;
+    createTeacherUseCase: UseCaseInterface;
+    findTeacherUseCase: UseCaseInterface;
+    findTeachersUseCase: UseCaseInterface;
 }
 
 export default class TeacherFacade implements TeacherFacadeInterface {
-    private _createUseCase: UseCaseInterface;
-    private _createTeacherExam: UseCaseInterface;
-    private _findUseCase: UseCaseInterface;
+    private _createTeacherUseCase: UseCaseInterface;
+    private _findTeacherUseCase: UseCaseInterface;
+    private _findTeachersUseCase: UseCaseInterface;
 
     constructor(useCaseProps: UseCaseProps) {
-        this._createUseCase = useCaseProps.createUseCase;
-        this._createTeacherExam = useCaseProps.createUseCase;
-        this._findUseCase = useCaseProps.createUseCase;
+        this._createTeacherUseCase = useCaseProps.createTeacherUseCase;
+        this._findTeacherUseCase = useCaseProps.findTeacherUseCase;
+        this._findTeachersUseCase = useCaseProps.findTeachersUseCase;
     }
 
     createTeacher(
         input: CreateTeacherFacadeInputDto
     ): Promise<CreateTeacherFacadeOutputDto> {
-        return this._createUseCase.execute(input);
-    }
-
-    createExam(
-        input: CreateTeacherExamInputDto
-    ): Promise<CreateTeacherExamOutputDto> {
-        return this._createTeacherExam.execute(input);
+        return this._createTeacherUseCase.execute(input);
     }
 
     findTeacher(
         input: FindTeacherFacadeInputDto
     ): Promise<FindTeacherFacadeOutputDto> {
-        return this._findUseCase.execute(input);
+        return this._findTeacherUseCase.execute(input);
+    }
+
+    findTeachers(
+        input: FindTeachersFacadeInputDto
+    ): Promise<FindTeachersFacadeOutputDto> {
+        return this._findTeachersUseCase.execute(input);
     }
 }

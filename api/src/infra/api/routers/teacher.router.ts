@@ -20,16 +20,14 @@ teacherRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-teacherRouter.post("/exam", async (req: Request, res: Response) => {
+teacherRouter.get("/find/:id", async (req: Request, res: Response) => {
     const teacherFacade = TeacherFacadeFactory.create();
 
     try {
         const input = {
-            teacher_id: req.body.teacher_id,
-            questions_ids: req.body.questions_ids,
-            examInfo: req.body.examInfo,
+            id: req.params.id,
         };
-        const output = await teacherFacade.createExam(input);
+        const output = await teacherFacade.findTeacher(input);
         res.send(output);
     } catch (err: any) {
         res.status(500).send({
@@ -38,14 +36,12 @@ teacherRouter.post("/exam", async (req: Request, res: Response) => {
     }
 });
 
-teacherRouter.get("/:id", async (req: Request, res: Response) => {
+teacherRouter.get("/find/all", async (req: Request, res: Response) => {
     const teacherFacade = TeacherFacadeFactory.create();
 
     try {
-        const input = {
-            teacher_id: req.params.id,
-        };
-        const output = await teacherFacade.findTeacher(input);
+        const input = {};
+        const output = await teacherFacade.findTeachers(input);
         res.send(output);
     } catch (err: any) {
         res.status(500).send({

@@ -61,4 +61,21 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
 
         return new Exam(examProps);
     }
+
+    async findAll({}: {}): Promise<Teacher[]> {
+        const teachers = await prisma.teacher.findMany();
+
+        const output: Teacher[] = [];
+
+        teachers.forEach((teacher) => {
+            const teacherProps = {
+                id: teacher.id,
+                name: teacher.name,
+                username: teacher.username,
+            };
+            output.push(new Teacher(teacherProps));
+        });
+
+        return output;
+    }
 }

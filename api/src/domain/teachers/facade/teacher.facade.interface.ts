@@ -1,5 +1,4 @@
-import Exam from "../../exams/entity/exam.entity";
-import Question from "../../questions/entity/question.entity";
+import Teacher from "../entity/teacher.entity";
 
 export interface CreateTeacherFacadeInputDto {
     name: string;
@@ -24,21 +23,8 @@ export interface FindAllTeachersFacadeOutputDto {
         username: string;
     }[];
 }
-
-export interface CreateTeacherExamInputDto {
-    teacher_id: string;
-    questions_ids: { question_id: string }[];
-    examInfo: {
-        title: string;
-    };
-}
-
-export interface CreateTeacherExamOutputDto {
-    exam: Exam;
-}
-
 export interface FindTeacherFacadeInputDto {
-    teacher_id: string;
+    id: string;
 }
 
 export interface FindTeacherFacadeOutputDto {
@@ -46,16 +32,22 @@ export interface FindTeacherFacadeOutputDto {
     username: string;
 }
 
+export interface FindTeachersFacadeInputDto {}
+
+export interface FindTeachersFacadeOutputDto {
+    teachers: Teacher[];
+}
+
 export default interface TeacherFacadeInterface {
     createTeacher(
         input: CreateTeacherFacadeInputDto
     ): Promise<CreateTeacherFacadeOutputDto>;
 
-    createExam(
-        input: CreateTeacherExamInputDto
-    ): Promise<CreateTeacherExamOutputDto>;
-
     findTeacher(
         input: FindTeacherFacadeInputDto
     ): Promise<FindTeacherFacadeOutputDto>;
+
+    findTeachers(
+        input: FindTeachersFacadeInputDto
+    ): Promise<FindTeachersFacadeOutputDto>;
 }

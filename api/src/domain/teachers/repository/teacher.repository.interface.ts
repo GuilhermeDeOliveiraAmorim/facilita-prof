@@ -12,4 +12,6 @@ export default interface TeacherRepositoryInterface {
         exam: Exam,
         questions: Question[]
     ): Promise<Exam>;
+
+    findAll({}): Promise<Teacher[]>;
 }

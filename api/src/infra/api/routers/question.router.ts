@@ -21,7 +21,7 @@ questionRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-questionRouter.get("/all", async (req: Request, res: Response) => {
+questionRouter.get("/find/all", async (req: Request, res: Response) => {
     const questionFacade = QuestionFacadeFactory.create();
 
     try {
@@ -35,7 +35,7 @@ questionRouter.get("/all", async (req: Request, res: Response) => {
     }
 });
 
-questionRouter.get("/:id", async (req: Request, res: Response) => {
+questionRouter.get("/find/:id", async (req: Request, res: Response) => {
     const questionFacade = QuestionFacadeFactory.create();
 
     try {
