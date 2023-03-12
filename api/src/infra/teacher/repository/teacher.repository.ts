@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import TeacherRepositoryInterface from "../../../domain/teachers/repository/teacher.repository.interface";
 
 import Exam from "../../../domain/exams/entity/exam.entity";
-import Teacher from "../../../domain/teachers/entity/teacher.entity";
 import Question from "../../../domain/questions/entity/question.entity";
+import Teacher from "../../../domain/teachers/entity/teacher.entity";
 
 const prisma = new PrismaClient();
 
@@ -44,11 +44,6 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
                         id: teacherId,
                     },
                 },
-                questions: {
-                    connect: {
-                        id: questions[0].id,
-                    },
-                },
             },
         });
 
@@ -62,18 +57,13 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
         return new Exam(examProps);
     }
 
-    async findAll({}: {}): Promise<Teacher[]> {
+    async findAll(): Promise<Teacher[]> {
         const teachers = await prisma.teacher.findMany();
 
         const output: Teacher[] = [];
 
         teachers.forEach((teacher) => {
-            const teacherProps = {
-                id: teacher.id,
-                name: teacher.name,
-                username: teacher.username,
-            };
-            output.push(new Teacher(teacherProps));
+            output.push(new Teacher(teacher));
         });
 
         return output;

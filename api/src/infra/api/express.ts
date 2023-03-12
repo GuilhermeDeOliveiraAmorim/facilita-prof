@@ -1,8 +1,8 @@
-import express, { Express } from "express";
 import cors from "cors";
-import { teacherRouter } from "./routers/teacher.router";
-import { questionRouter } from "./routers/question.router";
+import express, { Express } from "express";
 import { examRouter } from "./routers/exam.router";
+import { questionRouter } from "./routers/question.router";
+import { teacherRouter } from "./routers/teacher.router";
 
 export const app: Express = express();
 
