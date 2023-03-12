@@ -13,26 +13,37 @@ datasource db {
 model Teacher {
   id       String @id @default(uuid())
   name     String
-  username String
+  username String @unique
   Exam     Exam[]
 }
 
 model Question {
   id      String @id @default(uuid())
   title   String
-  content String
+  content String @unique
   answer  String
-
-  Exam   Exam?   @relation(fields: [examId], references: [id])
-  examId String?
+  
+  exams QuestionExam[]
 }
 
 model Exam {
   id    String  @id @default(uuid())
-  title String?
-
-  questions Question[]
+  title String? @unique
 
   teacher   Teacher @relation(fields: [teacherId], references: [id])
   teacherId String
+
+  questions QuestionExam[]
+}
+
+model QuestionExam {
+  question Question @relation(fields: [questionId], references: [id])
+  questionId String
+
+  exam Exam @relation(fields: [examId], references: [id])
+  examId String
+
+  createAt DateTime @default(now())
+
+  @@id([questionId, examId])
 }

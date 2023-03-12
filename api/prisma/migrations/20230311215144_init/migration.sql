@@ -1,9 +1,27 @@
--- AlterTable
-ALTER TABLE "Question" ADD COLUMN     "examId" TEXT;
+-- CreateTable
+CREATE TABLE "Teacher" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+
+    CONSTRAINT "Teacher_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Question" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "answer" TEXT NOT NULL,
+    "examId" TEXT,
+
+    CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Exam" (
     "id" TEXT NOT NULL,
+    "title" TEXT,
     "teacherId" TEXT NOT NULL,
 
     CONSTRAINT "Exam_pkey" PRIMARY KEY ("id")
