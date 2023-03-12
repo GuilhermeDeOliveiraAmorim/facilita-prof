@@ -6,21 +6,23 @@ export class TeacherHttpGateway implements TeacherGateway {
     constructor(private http: AxiosInstance) {}
 
     async create(name: string, username: string): Promise<Teacher> {
-        return await this.http.post("/teacher", {
+        const teacher = await this.http.post("/teacher", {
             name: name,
             username: username,
         });
+
+        const newTeacher = new Teacher({
+            id: teacher.data.id,
+            name: teacher.data.name,
+            username: teacher.data.username,
+        });
+
+        return newTeacher;
     }
 
-    async find(id: string): Promise<Teacher | void> {
-        return await this.http.get<Teacher>(`/teacher/find/${id}`).then(
-            (response) =>
-                new Teacher({
-                    id: response.data.id,
-                    name: response.data.name,
-                    username: response.data.username,
-                })
-        );
+    async find(id: string): Promise<Teacher> {
+        const teacher = await this.http.get(`/teacher/find/${id}`);
+        return teacher.data;
     }
 
     async findAll(): Promise<Teacher[] | void> {

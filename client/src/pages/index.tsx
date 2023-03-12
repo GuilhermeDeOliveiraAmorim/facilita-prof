@@ -1,3 +1,4 @@
+import { setCookie } from 'cookies-next';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
@@ -31,7 +32,10 @@ const Home: NextPage = () => {
     try {
       const gateway = new TeacherHttpGateway(http);
       const useCase = new CreateTeacherUseCase(gateway);
-      await useCase.execute(input.name, input.username);
+      const teacher = await useCase.execute(input.name, input.username);
+
+      setCookie("teacher", teacher.id);
+
       return router.push({
         pathname: `/workspace`,
       });

@@ -18,4 +18,12 @@ export class Teacher {
     get username() {
         return this.props.username;
     }
+
+    toJSON() {
+        return {
+            id: this.id,
+            name: this.name,
+            username: this.username,
+        };
+    }
 }
