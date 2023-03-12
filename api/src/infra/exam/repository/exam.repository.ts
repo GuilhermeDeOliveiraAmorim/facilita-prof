@@ -2,8 +2,8 @@ import Exam from "../../../domain/exams/entity/exam.entity";
 import ExamRepositoryInterface from "../../../domain/exams/repository/exam.repository.interface";
 
 import { PrismaClient } from "@prisma/client";
-import Teacher from "../../../domain/teachers/entity/teacher.entity";
 import Question from "../../../domain/questions/entity/question.entity";
+import Teacher from "../../../domain/teachers/entity/teacher.entity";
 const prisma = new PrismaClient();
 
 export default class ExamRepository implements ExamRepositoryInterface {
@@ -27,22 +27,14 @@ export default class ExamRepository implements ExamRepositoryInterface {
             data: data,
         });
 
-        await Promise.all(
-            examQuestions.map(async (question) => {
-                await prisma.exam.update({
-                    where: {
-                        id: examId,
-                    },
-                    data: {
-                        questions: {
-                            connect: {
-                                id: question.id,
-                            },
-                        },
-                    },
-                });
-            })
-        );
+        examQuestions.forEach(async (question) => {
+            await prisma.questionExam.create({
+                data: {
+                    examId: examId,
+                    questionId: question.id,
+                },
+            });
+        });
     }
 
     async find(id: string): Promise<Exam> {
@@ -52,34 +44,51 @@ export default class ExamRepository implements ExamRepositoryInterface {
             },
             include: {
                 teacher: true,
-                questions: true,
+                questions: {
+                    include: {
+                        question: {
+                            select: {
+                                id: true,
+                                title: true,
+                                content: true,
+                                answer: true,
+                            },
+                        },
+                    },
+                },
             },
         });
 
-        const teacher = new Teacher({
+        const teacherProps = {
             id: exam.teacher.id,
             name: exam.teacher.name,
             username: exam.teacher.username,
-        });
+        };
 
-        const questionsAdded: Question[] = [];
+        const teacher = new Teacher(teacherProps);
+
+        const questions: Question[] = [];
 
         exam.questions.map((question) => {
-            questionsAdded.push(
-                new Question({
-                    id: question.id,
-                    answer: question.answer,
-                    content: question.content,
-                    title: question.title,
-                })
-            );
+            const questionProps = {
+                id: question.question.id,
+                title: question.question.title,
+                content: question.question.content,
+                answer: question.question.answer,
+            };
+
+            const questionEntity = new Question(questionProps);
+
+            questions.push(questionEntity);
         });
 
-        return new Exam({
+        const examProps = {
             id: exam.id,
             title: exam.title,
             teacher: teacher,
-            questions: questionsAdded,
-        });
+            questions: questions,
+        };
+
+        return new Exam(examProps);
     }
 }

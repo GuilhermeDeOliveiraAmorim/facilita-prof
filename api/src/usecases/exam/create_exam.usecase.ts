@@ -3,6 +3,7 @@ import Exam from "../../domain/exams/entity/exam.entity";
 import ExamRepositoryInterface from "../../domain/exams/repository/exam.repository.interface";
 import Question from "../../domain/questions/entity/question.entity";
 import QuestionRepositoryInterface from "../../domain/questions/repository/question.repository.interface";
+import Teacher from "../../domain/teachers/entity/teacher.entity";
 import TeacherRepositoryInterface from "../../domain/teachers/repository/teacher.repository.interface";
 import { InputCreateExamDto, OutputCreateExamDto } from "./create_exam.dto";
 
@@ -24,21 +25,31 @@ export default class CreateExamUseCase implements UseCaseInterface {
     async execute(input: InputCreateExamDto): Promise<OutputCreateExamDto> {
         const teacher = await this.teacherRepository.find(input.teacher_id);
 
-        const questions = await this.questionRepository.findAll({});
+        const teacherProps = {
+            id: input.teacher_id,
+            name: teacher.name,
+            username: teacher.username,
+        };
+
+        const teacherEntity = new Teacher(teacherProps);
 
         const questionsToAdded: Question[] = [];
 
-        questions.map((question) => {
-            input.questions_ids.map((questionToAdded) => {
-                if (question.id === questionToAdded.question_id) {
-                    questionsToAdded.push(question);
-                }
-            });
+        input.questions_ids.map(async (questionId) => {
+            try {
+                const question = await this.questionRepository.findById(
+                    questionId.question_id
+                );
+
+                questionsToAdded.push(question);
+            } catch (error) {
+                return null;
+            }
         });
 
         const examProps = {
             title: input.title,
-            teacher: teacher,
+            teacher: teacherEntity,
             questions: questionsToAdded,
         };
 
@@ -46,13 +57,11 @@ export default class CreateExamUseCase implements UseCaseInterface {
 
         await this.examRepository.add(exam);
 
-        const output: OutputCreateExamDto = null;
-
-        output.id = exam.id;
-        output.title = exam.title;
-        output.teacher = exam.teacher;
-        output.questions = exam.questions;
-
-        return output;
+        return {
+            id: exam.id,
+            title: exam.title,
+            teacher: teacher,
+            questions: questionsToAdded,
+        };
     }
 }

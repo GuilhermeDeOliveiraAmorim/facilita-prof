@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import ExamInterface from "./exam.interface";
-import Teacher from "../../teachers/entity/teacher.entity";
 import Question from "../../questions/entity/question.entity";
+import Teacher from "../../teachers/entity/teacher.entity";
+import ExamInterface from "./exam.interface";
 
 type ExamProps = {
     id?: string;
