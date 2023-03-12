@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import express, { Request, Response } from "express";
 import QuestionFacadeFactory from "../../../domain/questions/factory/facade.factory";
 
@@ -14,10 +15,15 @@ questionRouter.post("/", async (req: Request, res: Response) => {
         };
         const output = await questionFacade.createQuestion(input);
         res.send(output);
-    } catch (err: any) {
-        res.status(500).send({
-            message: err.message,
-        });
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === "P2002") {
+                res.status(500).send({
+                    message:
+                        "A new question cannot be created with this content",
+                });
+            }
+        }
     }
 });
 

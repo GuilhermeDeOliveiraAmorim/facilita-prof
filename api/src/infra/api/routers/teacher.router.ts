@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import express, { Request, Response } from "express";
 import TeacherFacadeFactory from "../../../domain/teachers/factory/facade.factory";
 
@@ -13,10 +14,15 @@ teacherRouter.post("/", async (req: Request, res: Response) => {
         };
         const output = await teacherFacade.createTeacher(input);
         res.send(output);
-    } catch (err: any) {
-        res.status(500).send({
-            message: err.message,
-        });
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === "P2002") {
+                res.status(500).send({
+                    message:
+                        "A new teacher cannot be created with this username",
+                });
+            }
+        }
     }
 });
 
