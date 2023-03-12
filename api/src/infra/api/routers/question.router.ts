@@ -50,3 +50,23 @@ questionRouter.get("/find/:id", async (req: Request, res: Response) => {
         });
     }
 });
+
+questionRouter.get(
+    "/find/all/exam/:id",
+    async (req: Request, res: Response) => {
+        const questionFacade = QuestionFacadeFactory.create();
+
+        try {
+            const input = {
+                examId: req.params.id,
+            };
+
+            const output = await questionFacade.findAllByExamId(input);
+            res.send(output);
+        } catch (err: any) {
+            res.status(500).send({
+                message: err.message,
+            });
+        }
+    }
+);

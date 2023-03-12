@@ -1,5 +1,5 @@
-import QuestionRepositoryInterface from "../../../domain/questions/repository/question.repository.interface";
 import Question from "../../../domain/questions/entity/question.entity";
+import QuestionRepositoryInterface from "../../../domain/questions/repository/question.repository.interface";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -28,6 +28,22 @@ export default class QuestionRepository implements QuestionRepositoryInterface {
 
     async findAll(): Promise<Question[]> {
         const questions = await prisma.question.findMany();
+
+        const output: Question[] = [];
+
+        questions.forEach((question) => {
+            output.push(new Question(question));
+        });
+
+        return output;
+    }
+
+    async findAllByExamId(examId: string): Promise<Question[]> {
+        const questions = await prisma.question.findMany({
+            where: {
+                exams: { every: { examId } },
+            },
+        });
 
         const output: Question[] = [];
 

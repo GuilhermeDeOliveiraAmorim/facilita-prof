@@ -32,6 +32,14 @@ export interface FindByIdQuestionFacadeOutputDto {
     question: Question;
 }
 
+export interface FindAllQuestionsByExamIdFacadeInputDto {
+    examId: string;
+}
+
+export interface FindAllQuestionsByExamIdFacadeOutputDto {
+    questions: Question[];
+}
+
 export default interface QuestionFacadeInterface {
     createQuestion(
         input: CreateQuestionFacadeInputDto
@@ -44,4 +52,8 @@ export default interface QuestionFacadeInterface {
     findByIdQuestion(
         input: FindByIdQuestionFacadeInputDto
     ): Promise<FindByIdQuestionFacadeOutputDto>;
+
+    findAllByExamId(
+        input: FindAllQuestionsByExamIdFacadeInputDto
+    ): Promise<FindAllQuestionsByExamIdFacadeOutputDto>;
 }

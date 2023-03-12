@@ -2,6 +2,8 @@ import UseCaseInterface from "../../@shared/usecase/use-case.interface";
 import QuestionFacadeInterface, {
     CreateQuestionFacadeInputDto,
     CreateQuestionFacadeOutputDto,
+    FindAllQuestionsByExamIdFacadeInputDto,
+    FindAllQuestionsByExamIdFacadeOutputDto,
     FindAllQuestionsFacadeInputDto,
     FindAllQuestionsFacadeOutputDto,
     FindByIdQuestionFacadeInputDto,
@@ -12,17 +14,21 @@ export interface UseCaseProps {
     createUseCase: UseCaseInterface;
     findAllQuestionsUseCase: UseCaseInterface;
     findByIdQuestionUseCase: UseCaseInterface;
+    findAllQuestionsByExamIdUseCase: UseCaseInterface;
 }
 
 export default class QuestionFacade implements QuestionFacadeInterface {
     private _createUseCase: UseCaseInterface;
     private _findAllQuestionsUseCase: UseCaseInterface;
     private _findByIdQuestionUseCase: UseCaseInterface;
+    private _findAllQuestionsByExamIdUseCase: UseCaseInterface;
 
     constructor(useCaseProps: UseCaseProps) {
         this._createUseCase = useCaseProps.createUseCase;
         this._findAllQuestionsUseCase = useCaseProps.findAllQuestionsUseCase;
         this._findByIdQuestionUseCase = useCaseProps.findByIdQuestionUseCase;
+        this._findAllQuestionsByExamIdUseCase =
+            useCaseProps.findAllQuestionsByExamIdUseCase;
     }
 
     findByIdQuestion(
@@ -41,5 +47,11 @@ export default class QuestionFacade implements QuestionFacadeInterface {
         input: FindAllQuestionsFacadeInputDto
     ): Promise<FindAllQuestionsFacadeOutputDto> {
         return this._findAllQuestionsUseCase.execute(input);
+    }
+
+    findAllByExamId(
+        input: FindAllQuestionsByExamIdFacadeInputDto
+    ): Promise<FindAllQuestionsByExamIdFacadeOutputDto> {
+        return this._findAllQuestionsByExamIdUseCase.execute(input);
     }
 }

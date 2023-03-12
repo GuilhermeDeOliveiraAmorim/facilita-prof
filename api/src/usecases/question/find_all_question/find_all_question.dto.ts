@@ -1,4 +1,4 @@
-import Question from "../../../../domain/questions/entity/question.entity";
+import Question from "../../../domain/questions/entity/question.entity";
 
 export interface InputFindAllQuestionsDto {}
 
