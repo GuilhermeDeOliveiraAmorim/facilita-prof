@@ -1,8 +1,8 @@
-import { Box, Text } from '@chakra-ui/react';
+import Main from '@/components/workspace/main';
+import { Box } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { FindTeacherUseCase } from '../@core/application/teacher/find-teacher.usecase';
 import { TeacherHttpGateway } from '../@core/infra/gateways/teacher.http.gateway';
-import AddQuestion from '../components/question/add';
 import Menu from '../components/workspace/menu';
 import Perfil from '../components/workspace/perfil';
 import { http } from '../utils/http';
@@ -20,13 +20,13 @@ type ITeacher = {
 export default function Workspace(props: ITeacher) {
     const { teacher } = props;
     return (
-        <Box height="100vh">
+        <Box
+            height="100vh"
+            backgroundColor="#F1FAEE"
+        >
             <Perfil name={teacher.teacher._name} picture={"https://bit.ly/dan-abramov"} />
             <Menu />
-            <Box backgroundColor="white" padding="5px">
-                <Text fontSize='md'>Cadastrar Questão</Text>
-                <AddQuestion teacherIdProps={teacher.teacher._id} />
-            </Box>
+            <Main />
         </Box>
     );
 }
