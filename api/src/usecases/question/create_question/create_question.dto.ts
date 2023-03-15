@@ -2,6 +2,7 @@ export interface InputCreateQuestionDto {
     title: string;
     content: string;
     answer: string;
+    teacherId: string;
 }
 
 export interface OutputCreateQuestionDto {
@@ -9,4 +10,5 @@ export interface OutputCreateQuestionDto {
     title: string;
     content: string;
     answer: string;
+    teacherId: string;
 }

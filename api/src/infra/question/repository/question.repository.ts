@@ -13,6 +13,7 @@ export default class QuestionRepository implements QuestionRepositoryInterface {
                 title: question.title,
                 answer: question.answer,
                 content: question.content,
+                teacherId: question.teacherId,
             },
         });
     }

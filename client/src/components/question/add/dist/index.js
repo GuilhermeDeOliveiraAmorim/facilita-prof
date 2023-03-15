@@ -36,50 +36,87 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var react_1 = require("react");
+var react_1 = require("@chakra-ui/react");
+var react_2 = require("react");
 var create_question_usecase_1 = require("../../../@core/application/question/create-question.usecase");
 var question_http_gateway_1 = require("../../../@core/infra/gateways/question.http.gateway");
 var http_1 = require("../../../utils/http");
-var list_1 = require("../list");
-function AddQuestion() {
-    var _a = react_1.useState(""), title = _a[0], setTitle = _a[1];
-    var _b = react_1.useState(""), content = _b[0], setContent = _b[1];
-    var _c = react_1.useState(""), answer = _c[0], setAnswer = _c[1];
-    var _d = react_1.useState(""), error = _d[0], setError = _d[1];
-    var _e = react_1.useState([]), questions = _e[0], setQuestions = _e[1];
+function AddQuestion(props) {
+    var teacherIdProps = props.teacherIdProps;
+    var _a = react_2.useState(""), title = _a[0], setTitle = _a[1];
+    var _b = react_2.useState(""), content = _b[0], setContent = _b[1];
+    var _c = react_2.useState(""), answer = _c[0], setAnswer = _c[1];
+    var _d = react_2.useState(""), teacherId = _d[0], setTeacherId = _d[1];
+    var toast = react_1.useToast();
     function handleSubmit(event) {
         return __awaiter(this, void 0, void 0, function () {
-            var input, gateway, useCase, question, error_1;
+            var input, gateway, useCaseCreate, question, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
                         if (title === "") {
-                            return [2 /*return*/, setError("Please enter a title")];
+                            toast({
+                                title: 'Error',
+                                description: "Please enter a title",
+                                status: 'error',
+                                duration: 10000,
+                                isClosable: true
+                            });
+                            return [2 /*return*/];
                         }
                         if (content === "") {
-                            return [2 /*return*/, setError("Please enter a content")];
+                            toast({
+                                title: 'Error',
+                                description: "Please enter a content",
+                                status: 'error',
+                                duration: 10000,
+                                isClosable: true
+                            });
+                            return [2 /*return*/];
                         }
                         if (answer === "") {
-                            return [2 /*return*/, setError("Please enter a answer")];
+                            toast({
+                                title: 'Error',
+                                description: "Please enter a answer",
+                                status: 'error',
+                                duration: 10000,
+                                isClosable: true
+                            });
+                            return [2 /*return*/];
                         }
+                        setTeacherId(teacherIdProps);
                         input = {
                             title: title,
                             content: content,
-                            answer: answer
+                            answer: answer,
+                            teacherId: teacherId
                         };
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         gateway = new question_http_gateway_1.QuestionHttpGateway(http_1.http);
-                        useCase = new create_question_usecase_1.CreateQuestionUseCase(gateway);
-                        return [4 /*yield*/, useCase.execute(input.title, input.content, input.answer)];
+                        useCaseCreate = new create_question_usecase_1.CreateQuestionUseCase(gateway);
+                        return [4 /*yield*/, useCaseCreate.execute(input.title, input.content, input.answer, input.teacherId)];
                     case 2:
                         question = _a.sent();
+                        toast({
+                            title: 'Success',
+                            description: "Question " + content + " created successfully",
+                            status: 'success',
+                            duration: 4000,
+                            isClosable: true
+                        });
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _a.sent();
-                        setError(error_1.response.data.message);
+                        toast({
+                            title: 'Error',
+                            description: error_1.response.data.message,
+                            status: 'error',
+                            duration: 10000,
+                            isClosable: true
+                        });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -88,12 +125,15 @@ function AddQuestion() {
     }
     return (React.createElement("div", null,
         React.createElement("form", { onSubmit: handleSubmit },
-            React.createElement("input", { type: "text", onChange: function (event) { return setTitle(event.target.value); }, placeholder: 'T\u00EDtulo' }),
-            React.createElement("input", { type: "text", onChange: function (event) { return setContent(event.target.value); }, placeholder: 'Pergunta' }),
-            React.createElement("input", { type: "text", onChange: function (event) { return setAnswer(event.target.value); }, placeholder: 'Resposta' }),
-            React.createElement("button", { type: "submit" }, "Cadastrar")),
-        React.createElement("div", null,
-            React.createElement("p", null, error)),
-        React.createElement(list_1["default"], { listQuestion: questions })));
+            React.createElement(react_1.FormControl, null,
+                React.createElement(react_1.FormLabel, null, "T\u00EDtulo"),
+                React.createElement(react_1.Input, { type: 'text', onChange: function (event) { return setTitle(event.target.value); } })),
+            React.createElement(react_1.FormControl, null,
+                React.createElement(react_1.FormLabel, null, "Pergunta"),
+                React.createElement(react_1.Input, { type: 'text', onChange: function (event) { return setContent(event.target.value); } })),
+            React.createElement(react_1.FormControl, null,
+                React.createElement(react_1.FormLabel, null, "Resposta"),
+                React.createElement(react_1.Input, { type: 'text', onChange: function (event) { return setAnswer(event.target.value); } })),
+            React.createElement(react_1.Button, { mt: 4, type: 'submit' }, "Cadastrar"))));
 }
 exports["default"] = AddQuestion;

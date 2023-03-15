@@ -1,6 +1,5 @@
 import { Teacher } from "../../domain/entities/teacher";
 import { TeacherGateway } from "../../domain/gateways/teacher.gateway";
-
 export class FindTeacherUseCase {
     constructor(private teacherGateway: TeacherGateway) {}
 

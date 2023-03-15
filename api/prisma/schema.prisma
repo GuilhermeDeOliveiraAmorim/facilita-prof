@@ -15,6 +15,7 @@ model Teacher {
   name     String
   username String @unique
   Exam     Exam[]
+  Questions Question[]
 }
 
 model Question {
@@ -23,6 +24,9 @@ model Question {
   content String @unique
   answer  String
   
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+  teacherId String @default("")
+
   exams QuestionExam[]
 }
 

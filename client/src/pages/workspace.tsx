@@ -1,25 +1,33 @@
+import { Box, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { FindTeacherUseCase } from '../@core/application/teacher/find-teacher.usecase';
 import { TeacherHttpGateway } from '../@core/infra/gateways/teacher.http.gateway';
 import AddQuestion from '../components/question/add';
+import Menu from '../components/workspace/menu';
+import Perfil from '../components/workspace/perfil';
 import { http } from '../utils/http';
 
 type ITeacher = {
-    id: string;
-    name: string;
-    username: string;
+    teacher: {
+        teacher: {
+            _id: string;
+            _name: string;
+            _username: string;
+        }
+    };
 };
 
-export default function Workspace<NextPage>(props: ITeacher) {
-    const { id, name, username } = props;
+export default function Workspace(props: ITeacher) {
+    const { teacher } = props;
     return (
-        <div>
-            <h1>Olá, {name}!</h1>
-            <section>
-                <h2>Cadastrar Questão</h2>
-                <AddQuestion />
-            </section>
-        </div>
+        <Box height="100vh">
+            <Perfil name={teacher.teacher._name} picture={"https://bit.ly/dan-abramov"} />
+            <Menu />
+            <Box backgroundColor="white" padding="5px">
+                <Text fontSize='md'>Cadastrar Questão</Text>
+                <AddQuestion teacherIdProps={teacher.teacher._id} />
+            </Box>
+        </Box>
     );
 }
 
@@ -33,9 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
     return {
         props: {
-            id: teacher.teacher._id,
-            name: teacher.teacher._name,
-            username: teacher.teacher._username
+            teacher: teacher
         }
     };
 }

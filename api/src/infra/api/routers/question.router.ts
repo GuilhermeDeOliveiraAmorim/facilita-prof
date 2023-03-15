@@ -12,6 +12,7 @@ questionRouter.post("/", async (req: Request, res: Response) => {
             title: req.body.title,
             answer: req.body.answer,
             content: req.body.content,
+            teacherId: req.body.teacherId,
         };
         const output = await questionFacade.createQuestion(input);
         res.send(output);

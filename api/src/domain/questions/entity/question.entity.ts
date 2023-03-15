@@ -6,6 +6,7 @@ type QuestionProps = {
     title: string;
     content: string;
     answer: string;
+    teacherId: string;
 };
 
 export default class Question implements QuestionInterface {
@@ -13,12 +14,14 @@ export default class Question implements QuestionInterface {
     private _title: string;
     private _content: string;
     private _answer: string;
+    private _teacherId: string;
 
     constructor(props: QuestionProps) {
         this._id = props.id || uuidv4();
         this._title = props.title;
         this._content = props.content;
         this._answer = props.answer;
+        this._teacherId = props.teacherId;
     }
 
     validate() {
@@ -37,6 +40,10 @@ export default class Question implements QuestionInterface {
         if (this._answer.length === 0) {
             throw new Error("Answer is required");
         }
+
+        if (this._teacherId.length === 0) {
+            throw new Error("Teacher is required");
+        }
     }
 
     get id(): string {
@@ -53,5 +60,9 @@ export default class Question implements QuestionInterface {
 
     get answer(): string {
         return this._answer;
+    }
+
+    get teacherId(): string {
+        return this._teacherId;
     }
 }

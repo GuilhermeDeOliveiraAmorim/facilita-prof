@@ -1,3 +1,4 @@
+import { Box, Button, Flex, FormControl, FormLabel, Input, Text, useToast } from '@chakra-ui/react';
 import { setCookie } from 'cookies-next';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -11,17 +12,32 @@ const Home: NextPage = () => {
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
+
+  const toast = useToast();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (name === "") {
-      return setError("Please enter a name");
+      toast({
+        title: 'Error',
+        description: "Please enter a name",
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      });
+      return;
     }
 
     if (username === "") {
-      return setError("Please enter a username");
+      toast({
+        title: 'Error',
+        description: "Please enter a username",
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      });
+      return;
     }
 
     const input = {
@@ -40,25 +56,38 @@ const Home: NextPage = () => {
         pathname: `/workspace`,
       });
     } catch (error: any) {
-      setError(error.response.data.message);
+      toast({
+        title: 'Error',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 10000,
+        isClosable: true,
+      });
     }
   }
 
   return (
-    <div>
-      <h1>Bem vindo ao Facilita Prof!</h1>
-      <section>
-        <h2>Criar Professor</h2>
+    <Flex justifyContent="center" alignItems="center" direction="column" height="100vh" backgroundColor="blue.200">
+      <Text fontSize='xl' padding="10px">Bem vindo ao Facilita Prof!</Text>
+      <Box padding="5px" backgroundColor="white">
         <form onSubmit={handleSubmit}>
-          <input type="text" onChange={(event) => setName(event.target.value)} placeholder='Name' />
-          <input type="text" onChange={(event) => setUsername(event.target.value)} placeholder='Username' />
-          <button type="submit">Criar</button>
+          <FormControl>
+            <FormLabel>Nome</FormLabel>
+            <Input type='text' onChange={(event) => setName(event.target.value)} />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Usuário</FormLabel>
+            <Input type='text' onChange={(event) => setUsername(event.target.value)} />
+          </FormControl>
+          <Button
+            mt={4}
+            type='submit'
+          >
+            Cadastrar
+          </Button>
         </form>
-      </section>
-      <div>
-        <p>{error}</p>
-      </div>
-    </div>
+      </Box>
+    </Flex>
   )
 }
 

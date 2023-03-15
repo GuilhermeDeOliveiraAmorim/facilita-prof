@@ -7,8 +7,14 @@ export class CreateQuestionUseCase {
     async execute(
         title: string,
         content: string,
-        answer: string
+        answer: string,
+        teacherId: string
     ): Promise<Question> {
-        return await this.teacherGateway.create(title, content, answer);
+        return await this.teacherGateway.create(
+            title,
+            content,
+            answer,
+            teacherId
+        );
     }
 }

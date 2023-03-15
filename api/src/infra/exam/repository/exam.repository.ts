@@ -52,6 +52,7 @@ export default class ExamRepository implements ExamRepositoryInterface {
                                 title: true,
                                 content: true,
                                 answer: true,
+                                teacherId: true,
                             },
                         },
                     },
@@ -75,6 +76,7 @@ export default class ExamRepository implements ExamRepositoryInterface {
                 title: question.question.title,
                 content: question.question.content,
                 answer: question.question.answer,
+                teacherId: question.question.teacherId,
             };
 
             const questionEntity = new Question(questionProps);

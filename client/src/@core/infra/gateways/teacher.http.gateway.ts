@@ -25,15 +25,15 @@ export class TeacherHttpGateway implements TeacherGateway {
         return teacher.data;
     }
 
-    async findAll(): Promise<Teacher[] | void> {
-        return this.http.get<Teacher[]>("/find/all").then((response) => {
-            response.data.map((teacher) => {
-                new Teacher({
-                    id: teacher.id,
-                    name: teacher.name,
-                    username: teacher.username,
-                });
-            });
+    async findAll(): Promise<Teacher[]> {
+        const teachers = await this.http.get("teacher/find/all");
+
+        const allTeachers: Teacher[] = [];
+
+        teachers.data.map((teacher: any) => {
+            allTeachers.push(teacher);
         });
+
+        return allTeachers;
     }
 }

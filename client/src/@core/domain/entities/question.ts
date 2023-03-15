@@ -3,6 +3,7 @@ export type QuestionProps = {
     title: string;
     content: string;
     answer: string;
+    teacherId: string;
 };
 
 export class Question {
@@ -24,12 +25,17 @@ export class Question {
         return this.props.answer;
     }
 
+    get teacherId() {
+        return this.props.teacherId;
+    }
+
     toJSON() {
         return {
             id: this.id,
             title: this.title,
             content: this.content,
             answer: this.answer,
+            teacherId: this.teacherId,
         };
     }
 }

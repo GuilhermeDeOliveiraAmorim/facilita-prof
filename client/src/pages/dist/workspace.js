@@ -37,20 +37,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.getServerSideProps = void 0;
+var react_1 = require("@chakra-ui/react");
 var find_teacher_usecase_1 = require("../@core/application/teacher/find-teacher.usecase");
 var teacher_http_gateway_1 = require("../@core/infra/gateways/teacher.http.gateway");
 var add_1 = require("../components/question/add");
+var menu_1 = require("../components/workspace/menu");
+var perfil_1 = require("../components/workspace/perfil");
 var http_1 = require("../utils/http");
 function Workspace(props) {
-    var id = props.id, name = props.name, username = props.username;
-    return (React.createElement("div", null,
-        React.createElement("h1", null,
-            "Ol\u00E1, ",
-            name,
-            "!"),
-        React.createElement("section", null,
-            React.createElement("h2", null, "Cadastrar Quest\u00E3o"),
-            React.createElement(add_1["default"], null))));
+    var teacher = props.teacher;
+    return (React.createElement(react_1.Box, { height: "100vh" },
+        React.createElement(perfil_1["default"], { name: teacher.teacher._name, picture: "https://bit.ly/dan-abramov" }),
+        React.createElement(menu_1["default"], null),
+        React.createElement(react_1.Box, { backgroundColor: "white", padding: "5px" },
+            React.createElement(react_1.Text, { fontSize: 'md' }, "Cadastrar Quest\u00E3o"),
+            React.createElement(add_1["default"], { teacherIdProps: teacher.teacher._id }))));
 }
 exports["default"] = Workspace;
 exports.getServerSideProps = function (context) { return __awaiter(void 0, void 0, void 0, function () {
@@ -66,9 +67,7 @@ exports.getServerSideProps = function (context) { return __awaiter(void 0, void 
                 teacher = _a.sent();
                 return [2 /*return*/, {
                         props: {
-                            id: teacher.teacher._id,
-                            name: teacher.teacher._name,
-                            username: teacher.teacher._username
+                            teacher: teacher
                         }
                     }];
         }

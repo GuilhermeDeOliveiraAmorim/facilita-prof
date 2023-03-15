@@ -8,19 +8,24 @@ export class QuestionHttpGateway implements QuestionGateway {
     async create(
         title: string,
         content: string,
-        answer: string
+        answer: string,
+        teacherId: string
     ): Promise<Question> {
-        const question = await this.http.post("/question", {
+        const input = {
             title: title,
             content: content,
             answer: answer,
-        });
+            teacherId: teacherId,
+        };
+
+        const question = await this.http.post("/question", input);
 
         const newQuestion = new Question({
             id: question.data.id,
             title: question.data.title,
             content: question.data.content,
             answer: question.data.answer,
+            teacherId: question.data.teacherId,
         });
 
         return newQuestion;
@@ -34,23 +39,21 @@ export class QuestionHttpGateway implements QuestionGateway {
             title: question.data.title,
             content: question.data.content,
             answer: question.data.answer,
+            teacherId: question.data.teacherId,
         });
 
         return findedQuestion;
     }
 
-    async findAll(): Promise<void | Question[]> {
-        return await this.http
-            .get<Question[]>("question/find/all")
-            .then((response) => {
-                response.data.map((question) => {
-                    new Question({
-                        id: question.id,
-                        title: question.title,
-                        content: question.content,
-                        answer: question.answer,
-                    });
-                });
-            });
+    async findAll(): Promise<Question[]> {
+        const questions = await this.http.get("question/find/all");
+
+        const allQuestions: Question[] = [];
+
+        questions.data.map((question: any) => {
+            allQuestions.push(question);
+        });
+
+        return allQuestions;
     }
 }

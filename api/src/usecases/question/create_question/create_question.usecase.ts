@@ -20,6 +20,7 @@ export default class CreateQuestionUseCase implements UseCaseInterface {
             title: input.title,
             content: input.content,
             answer: input.answer,
+            teacherId: input.teacherId,
         };
 
         const question = new Question(questionProps);
@@ -31,6 +32,7 @@ export default class CreateQuestionUseCase implements UseCaseInterface {
             title: question.title,
             content: question.content,
             answer: question.answer,
+            teacherId: question.teacherId,
         };
     }
 }
