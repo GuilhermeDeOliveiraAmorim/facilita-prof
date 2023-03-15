@@ -23,10 +23,11 @@ export default function Workspace(props: ITeacher) {
         <Box
             height="100vh"
             backgroundColor="#F1FAEE"
+            overflow="auto"
         >
             <Perfil name={teacher.teacher._name} picture={"https://bit.ly/dan-abramov"} />
             <Menu />
-            <Main />
+            <Main teacherIdProps={teacher.teacher._id} />
         </Box>
     );
 }
