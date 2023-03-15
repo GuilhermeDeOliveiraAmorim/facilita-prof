@@ -1,20 +1,19 @@
-import { Flex, GridItem, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 interface ISection {
     title: string;
     component: JSX.Element;
-    colSpan: number;
 }
 
 export default function Section(props: ISection) {
-    const { title, component, colSpan } = props;
+    const { title, component } = props;
     return (
-        <GridItem
+        <Flex
             width="100%"
             backgroundColor="#1D3557"
             rounded="20px"
             padding="2px"
-            colSpan={colSpan}
+            flexDirection="column"
         >
             <Text
                 backgroundColor="#457B9D"
@@ -33,6 +32,6 @@ export default function Section(props: ISection) {
             >
                 {component}
             </Flex>
-        </GridItem>
+        </Flex>
     )
 }
