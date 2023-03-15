@@ -100,8 +100,6 @@ export default function AddExam(props: IAddQuestion) {
             questions_ids: questionsIds,
         };
 
-        console.log(input);
-
         try {
             const gateway = new ExamHttpGateway(http);
             const useCaseCreate = new CreateExamUseCase(gateway);

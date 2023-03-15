@@ -31,6 +31,10 @@ export default class Exam implements ExamInterface {
         if (this._teacher.id === null) {
             throw new Error("Teacher is required");
         }
+
+        if (!this._questions) {
+            throw new Error("Questions is required");
+        }
     }
 
     get id(): string {

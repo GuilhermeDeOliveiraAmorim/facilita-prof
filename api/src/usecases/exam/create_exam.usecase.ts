@@ -36,15 +36,21 @@ export default class CreateExamUseCase implements UseCaseInterface {
         const questionsToAdded: Question[] = [];
 
         input.questions_ids.map(async (questionId) => {
-            try {
-                const question = await this.questionRepository.findById(
-                    questionId.question_id
-                );
+            const question = await this.questionRepository.findById(
+                questionId.question_id
+            );
 
-                questionsToAdded.push(question);
-            } catch (error) {
-                return null;
-            }
+            const questionProps = {
+                id: question.id,
+                title: question.title,
+                content: question.content,
+                answer: question.answer,
+                teacherId: question.teacherId,
+            };
+
+            const questionEntity = new Question(questionProps);
+
+            questionsToAdded.push(questionEntity);
         });
 
         const examProps = {
