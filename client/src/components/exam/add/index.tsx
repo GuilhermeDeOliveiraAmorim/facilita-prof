@@ -1,79 +1,115 @@
-import { Box, Button, Flex, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
+import { CreateExamUseCase } from "@/@core/application/exam/create-exam.usecase";
+import { Question } from "@/@core/domain/entities/question";
+import { ExamHttpGateway } from "@/@core/infra/gateways/exam.http.getway";
+import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Input, Stack, Table, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
-import { CreateQuestionUseCase } from "../../../@core/application/question/create-question.usecase";
-import { QuestionHttpGateway } from "../../../@core/infra/gateways/question.http.gateway";
 import { http } from "../../../utils/http";
 
 interface IAddQuestion {
     teacherIdProps: string;
     buttonTitle: string;
+    questions: Question[]
+}
+
+interface IQuestionId {
+    question_id: string;
+}
+
+interface IQuestionsIds {
+    questions_ids: IQuestionId[]
 }
 
 export default function AddExam(props: IAddQuestion) {
-    const { teacherIdProps, buttonTitle } = props;
+    const { teacherIdProps, buttonTitle, questions } = props;
 
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [answer, setAnswer] = useState("");
-    const [teacherId, setTeacherId] = useState("");
+
+    const questionsIds: { "question_id": string }[] = [];
+
+    function setChecked(isChecked: boolean, questionId: string,) {
+        if (isChecked === true) {
+            for (var i = 0; i < questionsIds.length; i++) {
+                if (questionsIds[i].question_id === questionId) {
+                    toast({
+                        title: 'Error',
+                        description: "Questão já adicionada",
+                        status: 'error',
+                        duration: 4000,
+                        isClosable: true,
+                    });
+                    return;
+                }
+            }
+            questionsIds.push({ "question_id": questionId });
+        }
+
+        if (isChecked === false) {
+            for (var i = 0; i < questionsIds.length; i++) {
+
+                if (questionsIds[i].question_id === questionId) {
+
+                    questionsIds.splice(i, 1);
+                }
+
+            }
+        }
+    }
 
     const toast = useToast();
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-
         if (title === "") {
             toast({
                 title: 'Error',
                 description: "Please enter a title",
                 status: 'error',
-                duration: 10000,
+                duration: 4000,
                 isClosable: true,
             });
             return;
         }
 
 
-        if (content === "") {
+        if (teacherIdProps === "") {
             toast({
                 title: 'Error',
-                description: "Please enter a content",
+                description: "Missing teacher",
                 status: 'error',
-                duration: 10000,
+                duration: 4000,
                 isClosable: true,
             });
             return;
         }
 
-        if (answer === "") {
+        if (!questionsIds) {
             toast({
                 title: 'Error',
-                description: "Please enter a answer",
+                description: "Missing questions",
                 status: 'error',
-                duration: 10000,
+                duration: 4000,
                 isClosable: true,
             });
             return;
         }
-
-        setTeacherId(teacherIdProps);
 
         const input = {
             title: title,
-            content: content,
-            answer: answer,
-            teacherId: teacherId,
+            teacher_id: teacherIdProps,
+            questions_ids: questionsIds,
         };
 
+        console.log(input);
+
         try {
-            const gateway = new QuestionHttpGateway(http);
-            const useCaseCreate = new CreateQuestionUseCase(gateway);
-            await useCaseCreate.execute(input.title, input.content, input.answer, input.teacherId);
+            const gateway = new ExamHttpGateway(http);
+            const useCaseCreate = new CreateExamUseCase(gateway);
+            await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
 
             toast({
                 title: 'Success',
-                description: `Question ${content} created successfully`,
+                description: `Exam ${title} created successfully`,
                 status: 'success',
                 duration: 4000,
                 isClosable: true,
@@ -96,14 +132,34 @@ export default function AddExam(props: IAddQuestion) {
                     <FormLabel>Título</FormLabel>
                     <Input type='text' onChange={(event) => setTitle(event.target.value)} />
                 </FormControl>
-                <FormControl marginBottom="20px">
-                    <FormLabel>Pergunta</FormLabel>
-                    <Input type='text' onChange={(event) => setContent(event.target.value)} />
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Resposta</FormLabel>
-                    <Input type='text' onChange={(event) => setAnswer(event.target.value)} />
-                </FormControl>
+                <Stack width="100%" height="100%" backgroundColor="white">
+                    <Table variant='striped' colorScheme='teal' width="100%">
+                        <Thead>
+                            <Tr>
+                                <Th>Título</Th>
+                                <Th>Pergunta</Th>
+                                <Th></Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {questions?.map(question =>
+                                <Tr key={question._id}>
+                                    <Td>{question._title}</Td>
+                                    <Td>{question._content}</Td>
+                                    <Td>
+                                        <Checkbox
+                                            defaultChecked={false}
+                                            backgroundColor="white"
+                                            padding="4px"
+                                            rounded="4px"
+                                            onChange={(event) => setChecked(event.target.checked, question._id)}
+                                        />
+                                    </Td>
+                                </Tr>
+                            )}
+                        </Tbody>
+                    </Table>
+                </Stack>
                 <Flex
                     alignContent="center"
                     justifyContent="center"

@@ -1,4 +1,5 @@
 import { Question } from "@/@core/domain/entities/question";
+import AddExam from "@/components/exam/add";
 import AddQuestion from "@/components/question/add";
 import ListQuestion from "@/components/question/list";
 import { Grid } from "@chakra-ui/react";
@@ -26,7 +27,7 @@ export default function Main(props: IMain) {
             <Section
                 title="Criar Prova"
                 colSpan={2}
-                component={<AddQuestion buttonTitle="Criar" teacherIdProps={teacherIdProps} />}
+                component={<AddExam buttonTitle="Criar" teacherIdProps={teacherIdProps} questions={questions} />}
             />
             <Section
                 title="Histórioco de Provas"

@@ -7,13 +7,13 @@ export class ExamHttpGateway implements ExamGateway {
 
     async create(
         title: string,
-        teacherId: string,
-        questionsIds: string[]
+        teacher_id: string,
+        questions_ids: { question_id: string }[]
     ): Promise<Exam> {
         const input = {
             title: title,
-            teacherId: teacherId,
-            questionsIds: questionsIds,
+            teacher_id: teacher_id,
+            questions_ids: questions_ids,
         };
 
         const exam = await this.http.post("/exam", input);

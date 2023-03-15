@@ -19,7 +19,7 @@ export default function ListQuestion(props: IListQuestion) {
                 </Thead>
                 <Tbody>
                     {questions?.map(question =>
-                        <Tr>
+                        <Tr key={question._id}>
                             <Td>{question._title}</Td>
                             <Td>{question._content}</Td>
                             <Td>

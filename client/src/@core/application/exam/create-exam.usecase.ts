@@ -7,7 +7,7 @@ export class CreateExamUseCase {
     async execute(
         title: string,
         teacherId: string,
-        questionsIds: string[]
+        questionsIds: { question_id: string }[]
     ): Promise<Exam> {
         return await this.examGateway.create(title, teacherId, questionsIds);
     }
