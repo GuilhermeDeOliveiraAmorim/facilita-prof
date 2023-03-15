@@ -34,6 +34,7 @@ questionRouter.get("/find/all", async (req: Request, res: Response) => {
     try {
         const input = {};
         const output = await questionFacade.findAllQuestions(input);
+        console.log("/find/all", output);
         res.send(output);
     } catch (err: any) {
         res.status(500).send({

@@ -9,7 +9,7 @@ interface IAddQuestion {
     buttonTitle: string;
 }
 
-export default function AddQuestion(props: IAddQuestion) {
+export default function AddExam(props: IAddQuestion) {
     const { teacherIdProps, buttonTitle } = props;
 
     const [title, setTitle] = useState("");
@@ -117,7 +117,6 @@ export default function AddQuestion(props: IAddQuestion) {
                         {buttonTitle}
                     </Button>
                 </Flex>
-
             </form>
         </Box>
     )

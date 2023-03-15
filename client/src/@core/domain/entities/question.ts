@@ -1,41 +1,41 @@
 export type QuestionProps = {
-    id: string;
-    title: string;
-    content: string;
-    answer: string;
-    teacherId: string;
+    _id: string;
+    _title: string;
+    _content: string;
+    _answer: string;
+    _teacherId: string;
 };
 
 export class Question {
     constructor(public props: QuestionProps) {}
 
-    get id() {
-        return this.props.id;
+    get _id() {
+        return this.props._id;
     }
 
-    get title() {
-        return this.props.title;
+    get _title() {
+        return this.props._title;
     }
 
-    get content() {
-        return this.props.content;
+    get _content() {
+        return this.props._content;
     }
 
-    get answer() {
-        return this.props.answer;
+    get _answer() {
+        return this.props._answer;
     }
 
-    get teacherId() {
-        return this.props.teacherId;
+    get _teacherId() {
+        return this.props._teacherId;
     }
 
     toJSON() {
         return {
-            id: this.id,
-            title: this.title,
-            content: this.content,
-            answer: this.answer,
-            teacherId: this.teacherId,
+            id: this._id,
+            title: this._title,
+            content: this._content,
+            answer: this._answer,
+            teacherId: this._teacherId,
         };
     }
 }

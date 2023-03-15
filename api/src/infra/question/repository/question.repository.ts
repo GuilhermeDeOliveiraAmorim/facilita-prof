@@ -30,6 +30,8 @@ export default class QuestionRepository implements QuestionRepositoryInterface {
     async findAll(): Promise<Question[]> {
         const questions = await prisma.question.findMany();
 
+        console.log(questions);
+
         const output: Question[] = [];
 
         questions.forEach((question) => {
