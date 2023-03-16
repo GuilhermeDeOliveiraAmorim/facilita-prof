@@ -71,6 +71,10 @@ export default function AddQuestion(props: IAddQuestion) {
             const useCaseCreate = new CreateQuestionUseCase(gateway);
             await useCaseCreate.execute(input.title, input.content, input.answer, input.teacherId);
 
+            setTitle("");
+            setContent("");
+            setAnswer("");
+
             toast({
                 title: 'Success',
                 description: `Question ${content} created successfully`,
@@ -94,15 +98,15 @@ export default function AddQuestion(props: IAddQuestion) {
             <form onSubmit={handleSubmit}>
                 <FormControl marginBottom="20px">
                     <FormLabel>Título</FormLabel>
-                    <Input type='text' onChange={(event) => setTitle(event.target.value)} />
+                    <Input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
                 </FormControl>
                 <FormControl marginBottom="20px">
                     <FormLabel>Pergunta</FormLabel>
-                    <Input type='text' onChange={(event) => setContent(event.target.value)} />
+                    <Input type='text' value={content} onChange={(event) => setContent(event.target.value)} />
                 </FormControl>
                 <FormControl>
                     <FormLabel>Resposta</FormLabel>
-                    <Input type='text' onChange={(event) => setAnswer(event.target.value)} />
+                    <Input type='text' value={answer} onChange={(event) => setAnswer(event.target.value)} />
                 </FormControl>
                 <Flex
                     alignContent="center"
