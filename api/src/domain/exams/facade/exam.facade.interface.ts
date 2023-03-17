@@ -1,5 +1,6 @@
 import Question from "../../questions/entity/question.entity";
 import Teacher from "../../teachers/entity/teacher.entity";
+import Exam from "../entity/exam.entity";
 
 export interface CreateExamFacadeInputDto {
     title: string;
@@ -25,10 +26,22 @@ export interface FindExamFacadeOutputDto {
     questions: Question[];
 }
 
+export interface FindExamByTeacherIdFacadInputDto {
+    teacherId: string;
+}
+
+export interface FindExamByTeacherIdFacadOutputDto {
+    exams: Exam[];
+}
+
 export default interface ExamFacadeInterface {
     createExam(
         input: CreateExamFacadeInputDto
     ): Promise<CreateExamFacadeOutputDto>;
 
     findExam(input: FindExamFacadeInputDto): Promise<FindExamFacadeOutputDto>;
+
+    findExamByTeacherId(
+        input: FindExamByTeacherIdFacadInputDto
+    ): Promise<FindExamByTeacherIdFacadOutputDto>;
 }

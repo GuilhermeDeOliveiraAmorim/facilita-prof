@@ -3,6 +3,7 @@ import QuestionRepository from "../../../infra/question/repository/question.repo
 import TeacherRepository from "../../../infra/teacher/repository/teacher.repository";
 import CreateExamUseCase from "../../../usecases/exam/create_exam.usecase";
 import FindExamUseCase from "../../../usecases/exam/find_exam.usecase";
+import FindExamByTeacherIdUseCase from "../../../usecases/exam/find_exams_by_teacher_id.usecase";
 import ExamFacade from "../facade/exam.facade";
 
 export default class ExamFacadeFactory {
@@ -21,9 +22,14 @@ export default class ExamFacadeFactory {
 
         const findExamUseCase = new FindExamUseCase(examRepository);
 
+        const findExamByTeacherIdUseCase = new FindExamByTeacherIdUseCase(
+            examRepository
+        );
+
         const examFacade = new ExamFacade({
             createUseCase: createExamUseCase,
             findExamUseCase: findExamUseCase,
+            findExamByTeacherIdUseCase: findExamByTeacherIdUseCase,
         });
 
         return examFacade;

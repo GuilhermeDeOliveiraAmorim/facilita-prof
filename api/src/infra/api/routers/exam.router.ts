@@ -41,3 +41,19 @@ examRouter.get("/find/:id", async (req: Request, res: Response) => {
         });
     }
 });
+
+examRouter.get("/find/teacher/:id", async (req: Request, res: Response) => {
+    const examFacade = ExamFacadeFactory.create();
+
+    try {
+        const input = {
+            teacherId: req.params.id,
+        };
+        const output = await examFacade.findExamByTeacherId(input);
+        res.send(output);
+    } catch (err: any) {
+        res.status(500).send({
+            message: err.message,
+        });
+    }
+});

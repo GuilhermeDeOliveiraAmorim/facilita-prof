@@ -93,4 +93,69 @@ export default class ExamRepository implements ExamRepositoryInterface {
 
         return new Exam(examProps);
     }
+
+    async findExamByTeacherId(teacherId: string): Promise<Exam[]> {
+        const exams = await prisma.exam.findMany({
+            where: {
+                teacherId: teacherId,
+            },
+            include: {
+                teacher: true,
+                questions: {
+                    include: {
+                        question: {
+                            select: {
+                                id: true,
+                                title: true,
+                                content: true,
+                                answer: true,
+                                teacherId: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        var output: Exam[] = [];
+
+        exams.forEach((exam) => {
+            const teacherProps = {
+                id: exam.teacher.id,
+                name: exam.teacher.name,
+                username: exam.teacher.username,
+            };
+
+            const teacher = new Teacher(teacherProps);
+
+            const questions: Question[] = [];
+
+            exam.questions.map((question) => {
+                const questionProps = {
+                    id: question.question.id,
+                    title: question.question.title,
+                    content: question.question.content,
+                    answer: question.question.answer,
+                    teacherId: question.question.teacherId,
+                };
+
+                const questionEntity = new Question(questionProps);
+
+                questions.push(questionEntity);
+            });
+
+            const examProps = {
+                id: exam.id,
+                title: exam.title,
+                teacher: teacher,
+                questions: questions,
+            };
+
+            const newExam = new Exam(examProps);
+
+            output.push(newExam);
+        });
+
+        return output;
+    }
 }
