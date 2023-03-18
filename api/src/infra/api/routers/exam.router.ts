@@ -198,6 +198,45 @@ function generatePdf(
                     characterSpacing: 0,
                     lineHeight: 1,
                 },
+                question6: {
+                    type: "text",
+                    position: {
+                        x: 5,
+                        y: 200,
+                    },
+                    width: 200,
+                    height: 10,
+                    alignment: "left",
+                    fontSize: 20,
+                    characterSpacing: 0,
+                    lineHeight: 1,
+                },
+                question7: {
+                    type: "text",
+                    position: {
+                        x: 5,
+                        y: 225,
+                    },
+                    width: 200,
+                    height: 10,
+                    alignment: "left",
+                    fontSize: 20,
+                    characterSpacing: 0,
+                    lineHeight: 1,
+                },
+                question8: {
+                    type: "text",
+                    position: {
+                        x: 5,
+                        y: 250,
+                    },
+                    width: 200,
+                    height: 10,
+                    alignment: "left",
+                    fontSize: 20,
+                    characterSpacing: 0,
+                    lineHeight: 1,
+                },
             },
         ],
     };
@@ -266,6 +305,57 @@ function generatePdf(
                     question3: "3) " + questions[2].content,
                     question4: "4) " + questions[3].content,
                     question5: "5) " + questions[4].content,
+                },
+            ];
+            break;
+
+        case 6:
+            inputs = [
+                {
+                    title: title,
+                    teacher: "Professor: " + teacher.name,
+                    questionTitle: "Questões",
+                    question1: "1) " + questions[0].content,
+                    question2: "2) " + questions[1].content,
+                    question3: "3) " + questions[2].content,
+                    question4: "4) " + questions[3].content,
+                    question5: "5) " + questions[4].content,
+                    question6: "6) " + questions[5].content,
+                },
+            ];
+            break;
+
+        case 7:
+            inputs = [
+                {
+                    title: title,
+                    teacher: "Professor: " + teacher.name,
+                    questionTitle: "Questões",
+                    question1: "1) " + questions[0].content,
+                    question2: "2) " + questions[1].content,
+                    question3: "3) " + questions[2].content,
+                    question4: "4) " + questions[3].content,
+                    question5: "5) " + questions[4].content,
+                    question6: "6) " + questions[5].content,
+                    question7: "7) " + questions[6].content,
+                },
+            ];
+            break;
+
+        case 8:
+            inputs = [
+                {
+                    title: title,
+                    teacher: "Professor: " + teacher.name,
+                    questionTitle: "Questões",
+                    question1: "1) " + questions[0].content,
+                    question2: "2) " + questions[1].content,
+                    question3: "3) " + questions[2].content,
+                    question4: "4) " + questions[3].content,
+                    question5: "5) " + questions[4].content,
+                    question6: "6) " + questions[5].content,
+                    question7: "7) " + questions[6].content,
+                    question8: "8) " + questions[7].content,
                 },
             ];
             break;

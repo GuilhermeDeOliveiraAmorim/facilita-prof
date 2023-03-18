@@ -180,8 +180,6 @@ export default function Main(props: IMain) {
             const useCaseCreate = new CreateExamUseCase(gateway);
             const exam = await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
 
-            console.log(exam._id);
-
             examsArray.unshift(exam);
             setExamsArray(examsArray);
             setTitleExam("");

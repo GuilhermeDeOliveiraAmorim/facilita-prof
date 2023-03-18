@@ -100,6 +100,9 @@ export default class ExamRepository implements ExamRepositoryInterface {
             where: {
                 teacherId: teacherId,
             },
+            orderBy: {
+                createdAt: "desc",
+            },
             include: {
                 teacher: true,
                 questions: {
