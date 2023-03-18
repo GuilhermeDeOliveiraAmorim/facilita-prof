@@ -28,8 +28,7 @@ interface IQuestionsIds {
 export default function AddExam(props: IAddQuestion) {
     const { teacherIdProps, buttonTitle, questions } = props;
 
-    const [title, setTitle] = useState("");
-    const [check, setCheck] = useState(false);
+    const [titleExam, setTitleExam] = useState("");
 
     var questionsIds: { "question_id": string }[] = [];
 
@@ -54,7 +53,6 @@ export default function AddExam(props: IAddQuestion) {
             for (var i = 0; i < questionsIds.length; i++) {
                 if (questionsIds[i].question_id === questionId) {
                     questionsIds.splice(i, 1);
-                    console.log(questionsIds);
                 }
             }
         }
@@ -62,10 +60,10 @@ export default function AddExam(props: IAddQuestion) {
 
     const toast = useToast();
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmitExam(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (title === "") {
+        if (titleExam === "") {
             toast({
                 title: 'Error',
                 description: "Please enter a title",
@@ -100,7 +98,7 @@ export default function AddExam(props: IAddQuestion) {
         }
 
         const input = {
-            title: title,
+            title: titleExam,
             teacher_id: teacherIdProps,
             questions_ids: questionsIds,
         };
@@ -110,12 +108,12 @@ export default function AddExam(props: IAddQuestion) {
             const useCaseCreate = new CreateExamUseCase(gateway);
             await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
 
-            setTitle("");
+            setTitleExam("");
             questionsIds = [];
 
             toast({
                 title: 'Success',
-                description: `Exam ${title} created successfully`,
+                description: `Exam ${titleExam} created successfully`,
                 status: 'success',
                 duration: 4000,
                 isClosable: true,
@@ -133,10 +131,10 @@ export default function AddExam(props: IAddQuestion) {
 
     return (
         <Box width="100%">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitExam}>
                 <FormControl marginBottom="20px">
                     <FormLabel>Título</FormLabel>
-                    <Input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
+                    <Input type='text' value={titleExam} onChange={(event) => setTitleExam(event.target.value)} />
                 </FormControl>
                 <Stack width="100%" height="100%" backgroundColor="white" maxHeight="160px" overflowY="scroll">
                     <Table variant='striped' colorScheme='teal' width="100%" size='sm'>

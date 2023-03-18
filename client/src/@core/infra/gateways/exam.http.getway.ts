@@ -18,8 +18,6 @@ export class ExamHttpGateway implements ExamGateway {
 
         const exam = await this.http.post("/exam", input);
 
-        console.log(exam);
-
         const newExam = new Exam({
             _id: exam.data.id,
             _title: exam.data.title,

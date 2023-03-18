@@ -12,8 +12,6 @@ interface IListExam {
 export default function ListExam(props: IListExam) {
     const { exams } = props;
 
-    console.log(exams);
-
     async function handleLink(id: string) {
         const gatewayExam = new ExamHttpGateway(http);
         const useCaseMakePdf = new MakePdfExamUseCase(gatewayExam);

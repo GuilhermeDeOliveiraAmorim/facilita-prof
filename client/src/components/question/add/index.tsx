@@ -62,8 +62,6 @@ export default function AddQuestion(props: IAddQuestion) {
             teacherId: teacherIdProps,
         };
 
-        console.log(input);
-
         try {
             const gateway = new QuestionHttpGateway(http);
             const useCaseCreate = new CreateQuestionUseCase(gateway);
@@ -119,7 +117,6 @@ export default function AddQuestion(props: IAddQuestion) {
                         {buttonTitle}
                     </Button>
                 </Flex>
-
             </form>
         </Box>
     )
