@@ -16,6 +16,8 @@ export class ExamHttpGateway implements ExamGateway {
             questions_ids: questions_ids,
         };
 
+        console.log(input);
+
         const exam = await this.http.post("/exam", input);
 
         const newExam = new Exam({

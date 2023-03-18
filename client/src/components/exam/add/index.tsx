@@ -29,8 +29,9 @@ export default function AddExam(props: IAddQuestion) {
     const { teacherIdProps, buttonTitle, questions } = props;
 
     const [title, setTitle] = useState("");
+    const [check, setCheck] = useState(false);
 
-    const questionsIds: { "question_id": string }[] = [];
+    var questionsIds: { "question_id": string }[] = [];
 
     function setChecked(isChecked: boolean, questionId: string,) {
         if (isChecked === true) {
@@ -87,7 +88,7 @@ export default function AddExam(props: IAddQuestion) {
             return;
         }
 
-        if (!questionsIds) {
+        if (questionsIds.length == 0) {
             toast({
                 title: 'Error',
                 description: "Missing questions",
@@ -104,12 +105,13 @@ export default function AddExam(props: IAddQuestion) {
             questions_ids: questionsIds,
         };
 
-        console.log(input);
-
         try {
             const gateway = new ExamHttpGateway(http);
             const useCaseCreate = new CreateExamUseCase(gateway);
             await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
+
+            setTitle("");
+            questionsIds = [];
 
             toast({
                 title: 'Success',
@@ -123,7 +125,7 @@ export default function AddExam(props: IAddQuestion) {
                 title: 'Error',
                 description: error.response.data.message,
                 status: 'error',
-                duration: 10000,
+                duration: 4000,
                 isClosable: true,
             });
         }
@@ -134,7 +136,7 @@ export default function AddExam(props: IAddQuestion) {
             <form onSubmit={handleSubmit}>
                 <FormControl marginBottom="20px">
                     <FormLabel>Título</FormLabel>
-                    <Input type='text' onChange={(event) => setTitle(event.target.value)} />
+                    <Input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
                 </FormControl>
                 <Stack width="100%" height="100%" backgroundColor="white" maxHeight="160px" overflowY="scroll">
                     <Table variant='striped' colorScheme='teal' width="100%" size='sm'>
