@@ -7,4 +7,5 @@ export interface ExamGateway {
         questionsIds: { question_id: string }[]
     ): Promise<Exam>;
     find(id: string): Promise<Exam>;
+    findByTeacherId(teacherId: string): Promise<Exam[]>;
 }

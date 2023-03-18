@@ -12,9 +12,9 @@ export class TeacherHttpGateway implements TeacherGateway {
         });
 
         const newTeacher = new Teacher({
-            id: teacher.data.id,
-            name: teacher.data.name,
-            username: teacher.data.username,
+            _id: teacher.data.id,
+            _name: teacher.data.name,
+            _username: teacher.data.username,
         });
 
         return newTeacher;

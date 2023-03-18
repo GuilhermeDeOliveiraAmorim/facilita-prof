@@ -40,4 +40,16 @@ export class ExamHttpGateway implements ExamGateway {
 
         return findedExam;
     }
+
+    async findByTeacherId(teacherId: string): Promise<Exam[]> {
+        const exams = await this.http.get(`/exam/find/teacher/${teacherId}`);
+
+        var findedExams: Exam[] = [];
+
+        exams.data.exams.map((exam: Exam) => {
+            findedExams.push(exam);
+        });
+
+        return findedExams;
+    }
 }

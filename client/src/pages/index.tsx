@@ -50,7 +50,7 @@ const Home: NextPage = () => {
       const useCase = new CreateTeacherUseCase(gateway);
       const teacher = await useCase.execute(input.name, input.username);
 
-      setCookie("teacher", teacher.id);
+      setCookie("teacher", teacher._id);
 
       return router.push({
         pathname: `/workspace`,

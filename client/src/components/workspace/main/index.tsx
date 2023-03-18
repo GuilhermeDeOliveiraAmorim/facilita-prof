@@ -1,5 +1,7 @@
+import { Exam } from "@/@core/domain/entities/exam";
 import { Question } from "@/@core/domain/entities/question";
 import AddExam from "@/components/exam/add";
+import ListExam from "@/components/exam/list";
 import AddQuestion from "@/components/question/add";
 import ListQuestion from "@/components/question/list";
 import { Flex, Grid } from "@chakra-ui/react";
@@ -7,11 +9,12 @@ import Section from "./section";
 
 interface IMain {
     teacherIdProps: string,
-    questions: Question[]
+    questions: Question[],
+    exams: Exam[]
 }
 
 export default function Main(props: IMain) {
-    const { teacherIdProps, questions } = props;
+    const { teacherIdProps, questions, exams } = props;
     return (
         <Grid
             templateColumns="1fr 2fr"
@@ -25,7 +28,7 @@ export default function Main(props: IMain) {
                 />
                 <Section
                     title="Histórioco de Provas"
-                    component={<AddQuestion buttonTitle="Ver todas" teacherIdProps={teacherIdProps} />}
+                    component={<ListExam exams={exams} />}
                 />
             </Flex>
             <Flex flexDirection="column" gap="25px">

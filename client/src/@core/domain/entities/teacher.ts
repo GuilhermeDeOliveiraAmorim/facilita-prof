@@ -1,29 +1,29 @@
 export type TeacherProps = {
-    id: string;
-    name: string;
-    username: string;
+    _id: string;
+    _name: string;
+    _username: string;
 };
 
 export class Teacher {
     constructor(public props: TeacherProps) {}
 
-    get id() {
-        return this.props.id;
+    get _id() {
+        return this.props._id;
     }
 
-    get name() {
-        return this.props.name;
+    get _name() {
+        return this.props._name;
     }
 
-    get username() {
-        return this.props.username;
+    get _username() {
+        return this.props._username;
     }
 
     toJSON() {
         return {
-            id: this.id,
-            name: this.name,
-            username: this.username,
+            id: this._id,
+            name: this._name,
+            username: this._username,
         };
     }
 }
