@@ -52,4 +52,10 @@ export class ExamHttpGateway implements ExamGateway {
 
         return findedExams;
     }
+
+    async makePdf(id: string): Promise<string> {
+        const pdf = await this.http.get(`exam/make/pdf/${id}`);
+
+        return pdf.data;
+    }
 }

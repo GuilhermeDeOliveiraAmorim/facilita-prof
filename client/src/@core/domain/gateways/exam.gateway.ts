@@ -8,4 +8,5 @@ export interface ExamGateway {
     ): Promise<Exam>;
     find(id: string): Promise<Exam>;
     findByTeacherId(teacherId: string): Promise<Exam[]>;
+    makePdf(id: string): Promise<string>;
 }

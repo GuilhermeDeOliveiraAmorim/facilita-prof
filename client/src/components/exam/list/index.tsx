@@ -1,7 +1,9 @@
+import { MakePdfExamUseCase } from "@/@core/application/exam/make-pdf-exam.usecase";
 import { Exam } from "@/@core/domain/entities/exam";
+import { ExamHttpGateway } from "@/@core/infra/gateways/exam.http.getway";
+import { http } from "@/utils/http";
 import { DownloadIcon } from '@chakra-ui/icons';
-import { Link, Stack, Table, Tbody, Td, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { Link, Stack, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
 interface IListExam {
     exams: Exam[]
@@ -10,12 +12,10 @@ interface IListExam {
 export default function ListExam(props: IListExam) {
     const { exams } = props;
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [examItem, setExamItem] = useState<Exam | undefined>();
-
-    const handleSizeClick = (examItem: Exam) => {
-        setExamItem(examItem);
-        onOpen()
+    async function handleLink(id: string) {
+        const gatewayExam = new ExamHttpGateway(http);
+        const useCaseMakePdf = new MakePdfExamUseCase(gatewayExam);
+        await useCaseMakePdf.execute(id);
     }
 
     return (
@@ -32,7 +32,7 @@ export default function ListExam(props: IListExam) {
                         <Tr key={exam._id}>
                             <Td>{exam._title}</Td>
                             <Td>
-                                <Link colorScheme='blue' href="/pdf">
+                                <Link href={`/${exam._id}.pdf`} onClick={() => handleLink(exam._id)}>
                                     <DownloadIcon />
                                 </Link>
                             </Td>

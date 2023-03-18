@@ -47,16 +47,15 @@ export default function AddExam(props: IAddQuestion) {
                 }
             }
             questionsIds.push({ "question_id": questionId });
+            console.log(questionsIds);
         }
 
         if (isChecked === false) {
             for (var i = 0; i < questionsIds.length; i++) {
-
                 if (questionsIds[i].question_id === questionId) {
-
                     questionsIds.splice(i, 1);
+                    console.log(questionsIds);
                 }
-
             }
         }
     }
@@ -105,6 +104,8 @@ export default function AddExam(props: IAddQuestion) {
             teacher_id: teacherIdProps,
             questions_ids: questionsIds,
         };
+
+        console.log(input);
 
         try {
             const gateway = new ExamHttpGateway(http);

@@ -274,7 +274,7 @@ function generatePdf(
             break;
     }
 
-    const dir = "/home/guilherme/Workspace/facilita-prof/api/pdfs/";
+    const dir = "/home/guilherme/Workspace/facilita-prof/client/public/";
     const name = id + ".pdf";
 
     download = dir + id + ".pdf";
