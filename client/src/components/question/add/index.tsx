@@ -15,13 +15,11 @@ export default function AddQuestion(props: IAddQuestion) {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [answer, setAnswer] = useState("");
-    const [teacherId, setTeacherId] = useState("");
 
     const toast = useToast();
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-
 
         if (title === "") {
             toast({
@@ -57,14 +55,14 @@ export default function AddQuestion(props: IAddQuestion) {
             return;
         }
 
-        setTeacherId(teacherIdProps);
-
         const input = {
             title: title,
             content: content,
             answer: answer,
-            teacherId: teacherId,
+            teacherId: teacherIdProps,
         };
+
+        console.log(input);
 
         try {
             const gateway = new QuestionHttpGateway(http);
