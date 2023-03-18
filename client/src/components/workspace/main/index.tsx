@@ -20,6 +20,7 @@ export default function Main(props: IMain) {
     const { teacherIdProps, questions, exams } = props;
 
     const [questionsArray, setQuestionsArray] = useState<Question[]>(questions);
+    const [examsArray, setExamsArray] = useState<Exam[]>(exams);
 
     const [titleQuestion, setTitleQuestion] = useState("");
     const [content, setContent] = useState("");
@@ -177,8 +178,12 @@ export default function Main(props: IMain) {
         try {
             const gateway = new ExamHttpGateway(http);
             const useCaseCreate = new CreateExamUseCase(gateway);
-            await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
+            const exam = await useCaseCreate.execute(input.title, input.teacher_id, input.questions_ids);
 
+            console.log(exam._id);
+
+            examsArray.unshift(exam);
+            setExamsArray(examsArray);
             setTitleExam("");
             questionsIds = [];
 
@@ -389,7 +394,7 @@ export default function Main(props: IMain) {
                                         </Tr>
                                     </Thead>
                                     <Tbody>
-                                        {exams?.map(exam =>
+                                        {examsArray?.map(exam =>
                                             <Tr key={exam._id}>
                                                 <Td>{exam._title}</Td>
                                                 <Td>{exam._createdAt}</Td>

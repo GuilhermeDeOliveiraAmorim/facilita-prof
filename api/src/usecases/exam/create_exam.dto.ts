@@ -10,6 +10,7 @@ export interface InputCreateExamDto {
 export interface OutputCreateExamDto {
     id: string;
     title: string;
+    createdAt: string;
     teacher: Teacher;
     questions: Question[];
 }

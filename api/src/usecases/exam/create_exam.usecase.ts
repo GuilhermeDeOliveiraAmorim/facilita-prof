@@ -63,9 +63,12 @@ export default class CreateExamUseCase implements UseCaseInterface {
 
         await this.examRepository.add(exam);
 
+        const newExam = await this.examRepository.find(exam.id);
+
         return {
-            id: exam.id,
-            title: exam.title,
+            id: newExam.id,
+            title: newExam.title,
+            createdAt: newExam.createdAt,
             teacher: teacher,
             questions: questionsToAdded,
         };
