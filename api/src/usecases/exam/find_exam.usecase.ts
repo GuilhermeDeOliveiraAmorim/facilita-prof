@@ -15,6 +15,7 @@ export default class FindExamUseCase implements UseCaseInterface {
         return {
             id: exam.id,
             title: exam.title,
+            createdAt: exam.createdAt,
             teacher: exam.teacher,
             questions: exam.questions,
         };

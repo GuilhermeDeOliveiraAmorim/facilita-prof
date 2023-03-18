@@ -50,6 +50,7 @@ export default class TeacherRepository implements TeacherRepositoryInterface {
         const examProps = {
             id: newExam.id,
             title: newExam.title,
+            createdAt: exam.createdAt.toString(),
             teacher: teacher,
             questions: questions,
         };

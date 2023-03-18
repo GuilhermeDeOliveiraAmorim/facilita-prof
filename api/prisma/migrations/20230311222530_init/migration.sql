@@ -14,7 +14,7 @@ ALTER TABLE "Question" DROP COLUMN "examId";
 CREATE TABLE "QuestionExam" (
     "questionId" TEXT NOT NULL,
     "examId" TEXT NOT NULL,
-    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "QuestionExam_pkey" PRIMARY KEY ("questionId","examId")
 );

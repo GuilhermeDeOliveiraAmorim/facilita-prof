@@ -8,6 +8,7 @@ export interface FindExamInputDto {
 export interface FindExamOutputDto {
     id: string;
     title: string;
+    createdAt: string;
     teacher: Teacher;
     questions: Question[];
 }

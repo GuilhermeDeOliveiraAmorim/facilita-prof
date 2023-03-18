@@ -45,8 +45,6 @@ const Home: NextPage = () => {
       username: username,
     };
 
-    console.log(input);
-
     try {
       const gateway = new TeacherHttpGateway(http);
       const useCase = new CreateTeacherUseCase(gateway);

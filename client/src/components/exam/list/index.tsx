@@ -12,6 +12,8 @@ interface IListExam {
 export default function ListExam(props: IListExam) {
     const { exams } = props;
 
+    console.log(exams);
+
     async function handleLink(id: string) {
         const gatewayExam = new ExamHttpGateway(http);
         const useCaseMakePdf = new MakePdfExamUseCase(gatewayExam);
@@ -25,13 +27,14 @@ export default function ListExam(props: IListExam) {
                 <Thead>
                     <Tr>
                         <Th>Título</Th>
-                        <Th></Th>
+                        <Th>Criada em</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {exams?.map(exam =>
                         <Tr key={exam._id}>
                             <Td>{exam._title}</Td>
+                            <Td>{exam._createdAt}</Td>
                             <Td>
                                 <Link href={`/${exam._id}.pdf`} onClick={() => handleLink(exam._id)}>
                                     <DownloadIcon />

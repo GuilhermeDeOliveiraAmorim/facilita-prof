@@ -4,6 +4,7 @@ import { Teacher } from "./teacher";
 export type ExamProps = {
     _id: string;
     _title: string;
+    _createdAt: string;
     _teacher: Teacher;
     _questions: Question[];
 };
@@ -17,6 +18,10 @@ export class Exam {
 
     get _title() {
         return this.props._title;
+    }
+
+    get _createdAt() {
+        return this.props._createdAt;
     }
 
     get _teacher() {

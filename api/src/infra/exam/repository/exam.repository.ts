@@ -87,6 +87,7 @@ export default class ExamRepository implements ExamRepositoryInterface {
         const examProps = {
             id: exam.id,
             title: exam.title,
+            createdAt: exam.createdAt.toString(),
             teacher: teacher,
             questions: questions,
         };
@@ -147,6 +148,7 @@ export default class ExamRepository implements ExamRepositoryInterface {
             const examProps = {
                 id: exam.id,
                 title: exam.title,
+                createdAt: exam.createdAt.toString(),
                 teacher: teacher,
                 questions: questions,
             };

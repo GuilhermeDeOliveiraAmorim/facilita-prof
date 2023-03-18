@@ -14,6 +14,7 @@ model Teacher {
   id       String @id @default(uuid())
   name     String
   username String @unique
+  createdAt DateTime @default(now())
   Exam     Exam[]
   Questions Question[]
 }
@@ -23,6 +24,7 @@ model Question {
   title   String
   content String @unique
   answer  String
+  createdAt DateTime @default(now())
   
   teacher Teacher @relation(fields: [teacherId], references: [id])
   teacherId String @default("")
@@ -33,6 +35,7 @@ model Question {
 model Exam {
   id    String  @id @default(uuid())
   title String? @unique
+  createdAt DateTime @default(now())
 
   teacher   Teacher @relation(fields: [teacherId], references: [id])
   teacherId String
@@ -47,7 +50,7 @@ model QuestionExam {
   exam Exam @relation(fields: [examId], references: [id])
   examId String
 
-  createAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@id([questionId, examId])
 }

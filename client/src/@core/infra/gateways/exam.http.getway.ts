@@ -16,15 +16,16 @@ export class ExamHttpGateway implements ExamGateway {
             questions_ids: questions_ids,
         };
 
-        console.log(input);
-
         const exam = await this.http.post("/exam", input);
+
+        console.log(exam);
 
         const newExam = new Exam({
             _id: exam.data.id,
             _title: exam.data.title,
             _teacher: exam.data.teacher,
             _questions: exam.data.questions,
+            _createdAt: exam.data.createdAt,
         });
 
         return newExam;
@@ -38,6 +39,7 @@ export class ExamHttpGateway implements ExamGateway {
             _title: exam.data.title,
             _teacher: exam.data.teacher,
             _questions: exam.data.questions,
+            _createdAt: exam.data.createdAt,
         });
 
         return findedExam;

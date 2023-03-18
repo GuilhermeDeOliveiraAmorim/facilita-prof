@@ -6,6 +6,7 @@ import ExamInterface from "./exam.interface";
 type ExamProps = {
     id?: string;
     title: string;
+    createdAt?: string;
     teacher: Teacher;
     questions?: Question[];
 };
@@ -13,19 +14,21 @@ type ExamProps = {
 export default class Exam implements ExamInterface {
     private _id: string;
     private _title: string;
+    private _createdAt: string;
     private _teacher: Teacher;
     private _questions: Question[];
 
     constructor(props: ExamProps) {
         this._id = props.id || uuidv4();
         this._title = props.title;
+        this._createdAt = props.createdAt;
         this._teacher = props.teacher;
         this._questions = props.questions;
     }
 
     validate() {
-        if (this._id.length === 0) {
-            throw new Error("Id is required");
+        if (this._title.length === 0) {
+            throw new Error("Title is required");
         }
 
         if (this._teacher.id === null) {
@@ -45,15 +48,15 @@ export default class Exam implements ExamInterface {
         return this._title;
     }
 
+    get createdAt(): string {
+        return this._createdAt;
+    }
+
     get teacher(): Teacher {
         return this._teacher;
     }
 
     get questions(): Question[] {
         return this._questions;
-    }
-
-    set questions(questions: Question[]) {
-        this._questions = questions;
     }
 }
