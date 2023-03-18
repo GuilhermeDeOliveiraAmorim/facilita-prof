@@ -45,6 +45,8 @@ const Home: NextPage = () => {
       username: username,
     };
 
+    console.log(input);
+
     try {
       const gateway = new TeacherHttpGateway(http);
       const useCase = new CreateTeacherUseCase(gateway);
@@ -67,21 +69,22 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" direction="column" height="100vh" backgroundColor="blue.200">
+    <Flex justifyContent="center" alignItems="center" direction="column" height="100vh" backgroundColor="#F1FAEE">
       <Text fontSize='xl' padding="10px">Bem vindo ao Facilita Prof!</Text>
-      <Box padding="5px" backgroundColor="white">
+      <Box padding="10px" backgroundColor="#1D3557" rounded="2xl" color="#F1FAEE">
         <form onSubmit={handleSubmit}>
-          <FormControl>
+          <FormControl marginBottom="20px">
             <FormLabel>Nome</FormLabel>
-            <Input type='text' onChange={(event) => setName(event.target.value)} />
+            <Input type='text' onChange={(event) => setName(event.target.value)} backgroundColor="#A8DADC" color="#1D3557" />
           </FormControl>
           <FormControl>
             <FormLabel>Usuário</FormLabel>
-            <Input type='text' onChange={(event) => setUsername(event.target.value)} />
+            <Input type='text' onChange={(event) => setUsername(event.target.value)} backgroundColor="#A8DADC" color="#1D3557" />
           </FormControl>
           <Button
             mt={4}
             type='submit'
+            colorScheme="blue"
           >
             Cadastrar
           </Button>

@@ -19,7 +19,8 @@ export default function ListExam(props: IListExam) {
     }
 
     return (
-        <Stack width="100%" height="100%" backgroundColor="white">
+        <Stack width="100%" height="100%" backgroundColor="white" maxHeight="300px"
+            overflowY="scroll">
             <Table variant='striped' colorScheme='teal' width="100%">
                 <Thead>
                     <Tr>

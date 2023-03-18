@@ -5,5 +5,6 @@ export interface InputCreateTeacherDto {
 
 export interface OutputCreateTeacherDto {
     id: string;
+    name: string;
     username: string;
 }

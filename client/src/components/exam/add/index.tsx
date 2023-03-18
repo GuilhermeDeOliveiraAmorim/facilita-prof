@@ -47,7 +47,6 @@ export default function AddExam(props: IAddQuestion) {
                 }
             }
             questionsIds.push({ "question_id": questionId });
-            console.log(questionsIds);
         }
 
         if (isChecked === false) {
@@ -137,12 +136,13 @@ export default function AddExam(props: IAddQuestion) {
                     <FormLabel>Título</FormLabel>
                     <Input type='text' onChange={(event) => setTitle(event.target.value)} />
                 </FormControl>
-                <Stack width="100%" height="100%" backgroundColor="white">
-                    <Table variant='striped' colorScheme='teal' width="100%">
+                <Stack width="100%" height="100%" backgroundColor="white" maxHeight="160px" overflowY="scroll">
+                    <Table variant='striped' colorScheme='teal' width="100%" size='sm'>
                         <Thead>
                             <Tr>
                                 <Th>Título</Th>
                                 <Th>Pergunta</Th>
+                                <Th>Resposta</Th>
                                 <Th></Th>
                             </Tr>
                         </Thead>
@@ -151,6 +151,7 @@ export default function AddExam(props: IAddQuestion) {
                                 <Tr key={question._id}>
                                     <Td>{question._title}</Td>
                                     <Td>{question._content}</Td>
+                                    <Td>{question._answer}</Td>
                                     <Td>
                                         <Checkbox
                                             defaultChecked={false}

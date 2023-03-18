@@ -17,7 +17,7 @@ export default class CreateTeacherUseCase implements UseCaseInterface {
         input: InputCreateTeacherDto
     ): Promise<OutputCreateTeacherDto> {
         const teacherProps = {
-            name: input.username,
+            name: input.name,
             username: input.username,
         };
 
@@ -27,6 +27,7 @@ export default class CreateTeacherUseCase implements UseCaseInterface {
 
         return {
             id: teacher.id,
+            name: teacher.name,
             username: teacher.username,
         };
     }
